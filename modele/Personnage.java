@@ -34,6 +34,7 @@ public abstract class Personnage {
 	public int getRang() {
 		return rang;
 	}
+	
 
 	/**
 	 * @return the caracteristiques

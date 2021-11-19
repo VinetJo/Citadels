@@ -67,6 +67,7 @@ public class Joueur {
 	public int nbQuartiersDansMain() {
 		return nbQuartier;
 	}
+	
 
 
 	/**
@@ -159,6 +160,7 @@ public class Joueur {
 	
 	public void ajouterQuartierDansMain(Quartier quart) {
 		this.main.add(quart);
+		this.nbQuartier++;
 	}
 	
 	public Quartier retirerQuartierDansMain() {
@@ -166,6 +168,7 @@ public class Joueur {
 		int numAleatoire = generator.nextInt(this.nbQuartier);
 		Quartier quart = this.main.get(numAleatoire);
 		this.main.remove(numAleatoire);
+		this.nbQuartier--;
 		return quart;
 	}
 	
