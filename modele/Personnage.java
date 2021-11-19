@@ -110,11 +110,32 @@ public abstract class Personnage {
 		
 	}
 	
-	public abstract void utiliserPouvoir() {
+	
+
+	public void utiliserPouvoir() {
+		
 		
 	}
 	
+	public void reinitialiser() {
+		this.joueur = null;
+		this.assassine = false;
+		this.vole = false;
+	}
 	
 	
+	/* Pas utilisé
+	public void setNom(String nom) {
+		this.nom = nom;
+	}
+
+	public void setRang(int rang) {
+		this.rang = rang;
+	}
+
+	public void setCaracteristiques(String caracteristiques) {
+		this.caracteristiques = caracteristiques;
+	}
+	*/
 
 }
