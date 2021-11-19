@@ -16,9 +16,9 @@ public class TestRoi {
 		//testRoi.test5();
 		//testRoi.test6();
 		//testRoi.test7();
-		testRoi.test8();
+		//testRoi.test8();
 		//testRoi.test9();
-		//testRoi.test10();
+		testRoi.test10();
 	}
 	
 	public void test1(){

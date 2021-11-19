@@ -10,18 +10,25 @@ public class Roi extends Personnage{
 	
 	public void utiliserPouvoir() {
 		boolean possedeC = true;
-		super.getJoueur().setPossedeCouronne(possedeC);
-		System.out.println("Je prend la couronne");
+		if(super.getJoueur()!=null) {
+			super.getJoueur().setPossedeCouronne(possedeC);
+			System.out.println("Je prend la couronne");
+		}
 	}
 	
 	public String percevoirRessourcesSpecifiques() {
 		int compteur =0;
-		for(int j=0; j<super.getJoueur().nbQuartiersDansCite(); j++) {
-			if(super.getJoueur().getCite()[j].getCaracteristiques().equals("noble")) {
-				compteur++;
+		if(super.getJoueur()!=null) {
+			System.out.println(super.getJoueur().nbQuartiersDansCite());
+			for(int j=0; j<super.getJoueur().nbQuartiersDansCite(); j++) {
+				if(super.getJoueur().getCite()[j].getType().equals("NOBLE")) {
+					compteur++;
+					System.out.println("test");
+				}
 			}
+			super.getJoueur().ajouterPieces(compteur);
 		}
-		super.getJoueur().ajouterPieces(compteur);
+		
 		
 		return "Ajout de" + compteur + " pieces dans le trésor avec les quartier nobles";
 		

@@ -47,7 +47,12 @@ public abstract class Personnage {
 	 * @return the joueur
 	 */
 	public Joueur getJoueur() {
-		return joueur;
+		if(this.joueur != null) {
+			return joueur;
+		}else {
+			return null;
+		}
+		
 	}
 
 	/**
