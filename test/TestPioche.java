@@ -44,13 +44,13 @@ public class TestPioche {
 		pioche.ajouter(quartier3);
 		q = pioche.piocher();
 		Test.test(pioche.nombreElements()==2 && q==quartier1,
-			"test d'un retrait dans une pioche composée de trois cartes");
+			"test d'un retrait dans une pioche composï¿½e de trois cartes");
 		q = pioche.piocher();
 		Test.test(pioche.nombreElements()==1 && q==quartier2,
-			"test d'un retrait dans une pioche composée de deux cartes");
+			"test d'un retrait dans une pioche composï¿½e de deux cartes");
 		q = pioche.piocher();
 		Test.test(pioche.nombreElements()==0 && q==quartier3,
-			"test d'un retrait dans une pioche composée d'une seule carte");
+			"test d'un retrait dans une pioche composï¿½e d'une seule carte");
 	}
 	public void test4() {
 		System.out.println("TEST DU MELANGE DE LA PIOCHE");
@@ -62,16 +62,16 @@ public class TestPioche {
 		q = new Quartier("taverne",Quartier.TYPE_QUARTIERS[3],1); pioche.ajouter(q);
 		q = new Quartier("basilique",Quartier.TYPE_QUARTIERS[4],4,"A la fin de la partie, ..."); 
 		pioche.ajouter(q);
-		q = new Quartier("cathédrale",Quartier.TYPE_QUARTIERS[0],5); pioche.ajouter(q);
+		q = new Quartier("cathï¿½drale",Quartier.TYPE_QUARTIERS[0],5); pioche.ajouter(q);
 		q = new Quartier("caserne",Quartier.TYPE_QUARTIERS[1],3); pioche.ajouter(q);
 		q = new Quartier("manoir",Quartier.TYPE_QUARTIERS[2],3); pioche.ajouter(q);
-		q = new Quartier("hôtel de ville",Quartier.TYPE_QUARTIERS[3],15); pioche.ajouter(q);
-		q = new Quartier("bibliothèque",Quartier.TYPE_QUARTIERS[4],6,"Si vous choisissez..."); 
+		q = new Quartier("hï¿½tel de ville",Quartier.TYPE_QUARTIERS[3],15); pioche.ajouter(q);
+		q = new Quartier("bibliothï¿½que",Quartier.TYPE_QUARTIERS[4],6,"Si vous choisissez..."); 
 		pioche.ajouter(q);
 
 		pioche.melanger();		
-		Test.test(pioche.nombreElements()==10, "taille de la pioche après mélange");
-		System.out.println("Affichage de la pioche après mélange : ");
+		Test.test(pioche.nombreElements()==10, "taille de la pioche aprï¿½s mï¿½lange");
+		System.out.println("Affichage de la pioche aprï¿½s mï¿½lange : ");
 		for(int i =pioche.nombreElements(); i>0; i--) {
 			q = pioche.piocher(); 
 			System.out.println("- " + q.getNom());

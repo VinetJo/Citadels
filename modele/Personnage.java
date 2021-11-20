@@ -11,6 +11,7 @@ public abstract class Personnage {
 	private Joueur joueur;
 	private boolean assassine = false;
 	private boolean vole = false;
+	private PlateauDeJeu plateau;
 	
 	public Personnage(String nom, int rang, String caracteristiques) {
 		this.nom = nom;
@@ -110,7 +111,7 @@ public abstract class Personnage {
 	
 	public String percevoirRessourcesSpecifiques() {
 		if(!this.getAssassine() && this.joueur!=null ) {
-			return "Aucune Ressource Spécifique";
+			return "Aucune Ressource Spï¿½cifique";
 		}
 		return "";
 		
@@ -128,9 +129,20 @@ public abstract class Personnage {
 		this.assassine = false;
 		this.vole = false;
 	}
+
+	public PlateauDeJeu getPlateau() {
+		return plateau;
+	}
+
+	public void setPlateau(PlateauDeJeu plateau) {
+		this.plateau = plateau;
+	}
 	
 	
-	/* Pas utilisé
+	
+	
+	
+	/* Pas utilisï¿½
 	public void setNom(String nom) {
 		this.nom = nom;
 	}
