@@ -74,7 +74,7 @@ public abstract class Personnage {
 	 * @param joueur the joueur to set
 	 */
 	public void setJoueur(Joueur joueur) {
-		this.joueur = joueur;
+		this.joueur.monPersonnage = this;
 	}
 
 	/**
@@ -128,6 +128,7 @@ public abstract class Personnage {
 		this.joueur = null;
 		this.assassine = false;
 		this.vole = false;
+		this.joueur.monPersonnage = null;
 	}
 
 	public PlateauDeJeu getPlateau() {
