@@ -19,7 +19,7 @@ public class Assassin extends Personnage{
 			System.out.println("Votre choix : ");
 			int entier = Interaction.lireUnEntier(1,(super.getPlateau().getNombrePersonnages()+1));
 			entier--;
-			if(entier==0) {
+			if(super.getPlateau().getPersonnage(entier).getNom().equals("Assassin")) {
 				System.out.println("Vous ne pouvez pas vous assassiner.");
 			}else {
 				System.out.println("Vous assassinez : " + super.getPlateau().getPersonnage(entier).getNom());

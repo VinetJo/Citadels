@@ -74,6 +74,7 @@ public abstract class Personnage {
 	 * @param joueur the joueur to set
 	 */
 	public void setJoueur(Joueur joueur) {
+		this.joueur = joueur;
 		this.joueur.monPersonnage = this;
 	}
 
