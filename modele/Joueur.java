@@ -13,6 +13,7 @@ public class Joueur {
 	private int nbQuartier = 0;
 	private ArrayList<Quartier> main = new ArrayList<Quartier>();
 	private boolean possedeCouronne = false;
+	protected Personnage monPersonnage = null;
 	
 	
 	public Joueur(String nom) {
@@ -21,8 +22,14 @@ public class Joueur {
 		this.nbQuartier = 0;
 		this.main = new ArrayList<Quartier>();
 		this.possedeCouronne = false;
+		this.monPersonnage = null;
 		
 	}
+	
+	public Personnage getPersonnage() {
+		return monPersonnage;
+	}
+	
 
 
 	/**
@@ -39,19 +46,6 @@ public class Joueur {
 	public int nbPieces() {
 		return tresor;
 	}
-	
-	public int nbQuartiersDansCite() {
-		int nbQuartiersDansCite =0;
-		for(int i = 0; i<cite.length ; i++) {
-			if(cite[i]!=null && !cite[i].getNom().equals("") ) {
-				nbQuartiersDansCite++;
-			}else if(cite[i]==null) {
-				continue;
-			}
-		}
-		return nbQuartiersDansCite;
-	}
-
 
 	/**
 	 * @return the cite
@@ -103,6 +97,20 @@ public class Joueur {
 			}
 		}
 	}
+	
+	
+	public int nbQuartiersDansCite() {
+		int nbQuartiersDansCite =0;
+		for(int i = 0; i<cite.length ; i++) {
+			if(cite[i]!=null && !cite[i].getNom().equals("") ) {
+				nbQuartiersDansCite++;
+			}else if(cite[i]==null) {
+				continue;
+			}
+		}
+		return nbQuartiersDansCite;
+	}
+	
 	
 	public void ajouterQuartierDansCite(Quartier quart) {
 		int compteur =0;
