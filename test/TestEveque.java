@@ -9,8 +9,8 @@ public class TestEveque {
 
 	public static void main(String[] args) {
 		TestEveque test= new TestEveque();
-		test.test1();
-		//test.test2();	
+		//test.test1();
+		test.test2();	
 	}
 	
 	public void test1(){

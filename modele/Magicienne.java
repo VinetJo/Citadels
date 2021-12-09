@@ -52,6 +52,7 @@ public class Magicienne extends Personnage{
 							super.getPlateau().getJoueur(temp).retirerQuartierDansMain();
 						}
 						super.getPlateau().getJoueur(temp).getMain().addAll(copieTableau);
+						continu = false;
 					}
 				}while(continu);
 				
@@ -75,7 +76,6 @@ public class Magicienne extends Personnage{
 				}else {
 					for(int l =0; l<temp2; l++) {
 						
-						
 						System.out.println("Voici les cartes de votre main :");
 						for(int k = 0; k<super.getJoueur().getMain().size();k++) {
 							System.out.println((k+1) + " " +super.getJoueur().getMain().get(k).toString());
@@ -84,14 +84,18 @@ public class Magicienne extends Personnage{
 						int temp3 = Interaction.lireUnEntier(1, (super.getJoueur().getMain().size()+1));
 						temp3--;
 						super.getPlateau().getPioche().ajouter(copieTableau.get(temp3));
+
 						copieTableau.remove(temp3);
+
 					}
 					
 					for(int l = 0; l<temp2; l++) {
 						copieTableau.add(super.getPlateau().getPioche().piocher());
 					}
-					for(int l = 0; l<super.getJoueur().getMain().size(); l++) {
+					int temp4 = super.getJoueur().getMain().size();
+					for(int l = 0; l<temp4; l++) {
 						super.getJoueur().retirerQuartierDansMain();
+						
 					}
 					super.getJoueur().getMain().addAll(copieTableau);
 					
