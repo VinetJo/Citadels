@@ -33,7 +33,7 @@ public class Interaction {
 				if (i>=borneMin && i<borneMax) {
 					continu = false;
 				}else {
-					System.out.println("Hors Bornes, nouveaux entier : ");
+					System.out.println("Hors Bornes, nouveaux entier inférieur à " + borneMax + " : ");
 				}
 				
 			} catch (InputMismatchException e) {

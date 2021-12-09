@@ -14,6 +14,7 @@ public class Joueur {
 	private ArrayList<Quartier> main = new ArrayList<Quartier>();
 	private boolean possedeCouronne = false;
 	protected Personnage monPersonnage = null;
+
 	
 	
 	public Joueur(String nom) {

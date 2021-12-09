@@ -67,4 +67,11 @@ public class Quartier {
 		
 	}
 
+	@Override
+	public String toString() {
+		return "" + nom + " - type: " + type + " - pièces: " + coutConstruction;
+	}
+	
+	
+
 }
