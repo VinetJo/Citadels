@@ -13,8 +13,8 @@ import modele.Quartier;
 public class TestCondottiere {
 	public static void main(String[] args) {
 		TestCondottiere test = new TestCondottiere();
-		test.test1();
-		//test.test2();
+		//test.test1();
+		test.test2();
 		//test.test3();
 	}
 	
@@ -103,10 +103,8 @@ public class TestCondottiere {
 		for(int i = 0; i< condottiere.getJoueur().nbQuartiersDansCite(); i++)
 			System.out.print(mainCondottiere[i].getNom() + ", ");
 		System.out.println("");
-				
 		// utiliser le pouvoir du condottiere:		
 		condottiere.utiliserPouvoir();
-		
 		// on réaffiche la main de chaque joueur:
 		System.out.print("Main du Roi (" + roi.getJoueur().getNom() + "): ");
 		for(int i = 0; i< roi.getJoueur().nbQuartiersDansCite(); i++)
