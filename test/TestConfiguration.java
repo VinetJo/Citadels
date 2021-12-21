@@ -8,7 +8,11 @@ import modele.Pioche;
 public class TestConfiguration {
 	
 	public static void main(String[] args) {
-		
+		TestConfiguration test = new TestConfiguration();
+		test.test1();
+	}
+	
+	public void test1() {
 		Configuration config = new Configuration();
 		Pioche p = new Pioche(); 
 		p = config.nouvellePioche();
@@ -37,6 +41,5 @@ public class TestConfiguration {
 		Test.test(mil==11, "nb carte militaire");
 		Test.test(nob==12, "nb carte noble");
 		Test.test(com==20, "nb carte commerçant");
-		
 	}
 }
