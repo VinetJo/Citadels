@@ -143,25 +143,32 @@ public class Joueur {
 		Quartier quart = null;
 		int compteur =0;
 		do {
-			if(cite[compteur].getNom() == nomQuartier) {
+			if(this.cite[compteur].getNom() == nomQuartier) {
 				
-				/* Autre methode (a voir)
+				// Autre methode (a voir)
+				/*
 				quart = cite[compteur];
 				cite[compteur] = new Quartier();
 				
 				return quart;
 				*/
 				
-				quart = cite[compteur];
-				for(int j=0; j< (this.nbQuartiersDansCite() - (compteur+1)) ;j++) {
-					cite[compteur] = cite[compteur+1];
-					cite[compteur+1] = null;
+				quart = this.cite[compteur];
+				int j = 0;
+				int temp = (this.nbQuartiersDansCite() - (compteur+1));
+				for(j=0; j< temp ;j++) {
+					this.cite[compteur+j] = this.cite[compteur+1+j];
+					this.cite[compteur+1+j] = new Quartier();
+				}
+				if(j==0) {
+					this.cite[compteur] = new Quartier();
 				}
 											
 				return quart;
+				
 			}
 			compteur++;
-		}while(compteur<cite.length);
+		}while(compteur<this.cite.length);
 		
 		
 		return quart;

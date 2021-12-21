@@ -16,7 +16,7 @@ public class Condottiere extends Personnage{
 			for(int i =0 ; i< super.getPlateau().getNombreJoueurs() ; i++) {
 				System.out.println((i+1) + " - " + super.getPlateau().getJoueur(i).getNom()+ ": ");
 				for(int j = 0; j<super.getPlateau().getJoueur(i).nbQuartiersDansCite(); j++) {
-					System.out.println((j+1) + " " + super.getPlateau().getJoueur(i).getCite()[j].getNom()
+					System.out.println("-> "+(j+1) + "-" + super.getPlateau().getJoueur(i).getCite()[j].getNom()
 							+ "(coût " +(super.getPlateau().getJoueur(i).getCite()[j].getCout()-1) + ")," );
 					
 				}
@@ -32,8 +32,11 @@ public class Condottiere extends Personnage{
 				do {
 					boucle = false;
 					System.out.println("Quel quartier voulez vous détruire ?");
-					System.out.println(super.getPlateau().getJoueur(temp2).getCite().length);
-					int temp3 = Interaction.lireUnEntier(1, super.getPlateau().getJoueur(temp2).getCite().length);
+					int temp3 = Interaction.lireUnEntier(0, super.getPlateau().getJoueur(temp2).getCite().length);
+					if(temp3==0) {
+						System.out.println("Pouvoir annulé");
+						break;
+					}
 					temp3--;
 					if(super.getJoueur().nbPieces()<(super.getPlateau().getJoueur(temp2).getCite()[temp3].getCout()-1)) {
 						System.out.println("Votre trésor n'est pas suffisant");
@@ -43,8 +46,10 @@ public class Condottiere extends Personnage{
 						
 						System.out.println("=> On retire " + super.getPlateau().getJoueur(temp2).getCite()[temp3].getNom() 
 								+ " de " + super.getPlateau().getJoueur(temp2).getNom());
+						
 						super.getPlateau().getJoueur(temp2).retirerQuartierDansCite
 						(super.getPlateau().getJoueur(temp2).getCite()[temp3].getNom());
+						
 						
 						System.out.println("Il vous reste "+ super.getJoueur().nbPieces()  + " pièces dans votre trésor");
 					}
@@ -54,6 +59,18 @@ public class Condottiere extends Personnage{
 			
 			
 		}
+	}
+	
+	public String percevoirRessourcesSpecifiques() {
+		for(int i =0; i<super.getJoueur().nbQuartiersDansCite();i++) {
+					
+					if(super.getJoueur().getCite()[i].getType().equals("MILITAIRE")) {
+						super.getJoueur().ajouterPieces(1);
+					}
+				}
+		
+		return "";
+		
 	}
 
 }
