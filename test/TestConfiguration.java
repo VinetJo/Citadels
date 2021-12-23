@@ -3,13 +3,14 @@ package test;
 import java.util.Arrays;
 
 import application.Configuration;
-import modele.Pioche;
+import modele.*;
 
 public class TestConfiguration {
 	
 	public static void main(String[] args) {
 		TestConfiguration test = new TestConfiguration();
-		test.test1();
+		//test.test1();
+		test.test2();
 	}
 	
 	public void test1() {
@@ -41,5 +42,24 @@ public class TestConfiguration {
 		Test.test(mil==11, "nb carte militaire");
 		Test.test(nob==12, "nb carte noble");
 		Test.test(com==20, "nb carte commerçant");
+	}
+	
+	public void test2() {
+		Configuration config = new Configuration();
+		Pioche p = new Pioche(); 
+		p = config.nouvellePioche();
+		
+		PlateauDeJeu plat = new PlateauDeJeu();
+		plat = config.configurationDeBase(p);
+		
+		Test.test(plat.getNombreJoueurs()==4, "Nbr joueurs");
+		Test.test(plat.getNombrePersonnages()==8, "Nbr persos");
+		Test.test(p.nombreElements()==68, "test nb cartes + merveilles ");
+		p.melanger();
+		for(int i = 0; i<p.getListe().size();i++) {
+	        System.out.println(p.getListe().get(i));
+		}
+		
+		
 	}
 }

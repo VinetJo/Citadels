@@ -42,8 +42,8 @@ public class Configuration {
 	public static PlateauDeJeu configurationDeBase(Pioche p) {
 		PlateauDeJeu plat = new PlateauDeJeu();
 		Quartier q = new Quartier();
-		//Ajout Personnages
 		
+		//Ajout Personnages		
 		Assassin assassin = new Assassin();
 		plat.ajouterPersonnage(assassin);
 		Voleur voleur = new Voleur();
@@ -61,6 +61,17 @@ public class Configuration {
 		Condottiere condottiere = new Condottiere();
 		plat.ajouterPersonnage(condottiere);
 		
+		//Ajout Joueurs
+		Joueur joueur = new Joueur("Vous");
+		plat.ajouterJoueur(joueur);
+		joueur = new Joueur("jérrarre");
+		plat.ajouterJoueur(joueur);
+		joueur = new Joueur("fraideau");
+		plat.ajouterJoueur(joueur);
+		joueur = new Joueur("Seib");
+		plat.ajouterJoueur(joueur);		
+		
+		//Ajout Merveilles
 		q = new Quartier("bibliothèque", Quartier.TYPE_QUARTIERS[4],6,"Si vous choisissez de piocher des cartes au début du tour, conservez-les toutes.");
 		p.ajouter(q);
 		q = new Quartier("carrière", Quartier.TYPE_QUARTIERS[4],5,"Vous pouvez bâtir des quartiers identiques à d’autres quartiers de votre cit´e. Le propriétaire de la carrière peut bâtir autant de quartiers identiques qu’il le souhaite");
@@ -89,7 +100,7 @@ public class Configuration {
 		p.ajouter(q);
 		q = new Quartier("tripot", Quartier.TYPE_QUARTIERS[4],6,"Vous pouvez payer tout ou partie du coût de construction du Tripot en cartes de votre main, au prix de 1 carte pour 1 pièce d’or. ");
 		p.ajouter(q);
-		
+						
 		return plat;
 		
 		
