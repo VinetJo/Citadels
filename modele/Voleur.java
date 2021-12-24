@@ -1,5 +1,7 @@
 package modele;
 
+import java.util.Random;
+
 import controleur.Interaction;
 
 public class Voleur extends Personnage {
@@ -24,7 +26,7 @@ public class Voleur extends Personnage {
 			}else if(super.getPlateau().getPersonnage(entier).getRang()==1) {
 				System.out.println("Impossible de voler un personnage rang 1");
 			}else {
-				System.out.println("Vous volez : " + super.getPlateau().getPersonnage(entier).getNom());
+				
 				super.getPlateau().getPersonnage(entier).setVole();
 				super.getJoueur().ajouterPieces(super.getPlateau().getJoueur(entier).nbPieces());
 				super.getPlateau().getJoueur(entier).retirerPieces(super.getPlateau().getJoueur(entier).nbPieces());
@@ -33,4 +35,24 @@ public class Voleur extends Personnage {
 		}while(continu);
 		
 	}
+	
+	public void utiliserPouvoirAvatar() {
+		Random ran = new Random();
+		
+		boolean continu = true;
+		do {
+			int entierRan = ran.nextInt(super.getPlateau().getNombrePersonnages());
+			if(!super.getPlateau().getPersonnage(entierRan).getNom().equals("Voleur") && 
+					super.getPlateau().getPersonnage(entierRan).getRang()!=1) {
+				
+				System.out.println("Vous volez : " + super.getPlateau().getPersonnage(entierRan).getNom());
+				super.getPlateau().getPersonnage(entierRan).setVole();
+				super.getJoueur().ajouterPieces(super.getPlateau().getJoueur(entierRan).nbPieces());
+				super.getPlateau().getJoueur(entierRan).retirerPieces(super.getPlateau().getJoueur(entierRan).nbPieces());
+				continu = false;
+			}
+			
+		}while(continu);
+	}
+	
 }

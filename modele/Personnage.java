@@ -3,6 +3,8 @@
  */
 package modele;
 
+import java.util.Random;
+
 public abstract class Personnage {
 	
 	private String nom="";
@@ -122,6 +124,10 @@ public abstract class Personnage {
 
 	public void utiliserPouvoir() {
 		
+		
+	}
+	
+	public void utiliserPouvoirAvatar() {
 		
 	}
 	

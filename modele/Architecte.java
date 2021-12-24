@@ -12,5 +12,10 @@ public class Architecte extends Personnage{
 		super.getJoueur().ajouterQuartierDansMain(super.getPlateau().getPioche().piocher());	
 		
 	}
+	
+	public void utiliserPouvoirAvatar() {
+		super.getJoueur().ajouterQuartierDansMain(super.getPlateau().getPioche().piocher());
+		super.getJoueur().ajouterQuartierDansMain(super.getPlateau().getPioche().piocher());	
+	}
 
 }

@@ -1,5 +1,7 @@
 package modele;
 
+import java.util.Random;
+
 import controleur.Interaction;
 
 public class Assassin extends Personnage{
@@ -27,6 +29,24 @@ public class Assassin extends Personnage{
 				continu = false;
 			}
 		}while(continu);
+	}
+	
+	public void utiliserPouvoirAvatar() {
+		Random ran = new Random();
+		
+		boolean continu = true;
+		do {
+			int entierRan = ran.nextInt(super.getPlateau().getNombrePersonnages());
+			
+			if(!super.getPlateau().getPersonnage(entierRan).getNom().equals("Assassin")) {
+				
+				System.out.println("Vous assassinez : " + super.getPlateau().getPersonnage(entierRan).getNom());
+				super.getPlateau().getPersonnage(entierRan).setAssassine();
+				continu = false;
+				
+			}
+		}while(continu);
+		
 	}
 
 }

@@ -22,5 +22,10 @@ public class Marchande extends Personnage {
 		
 		super.getJoueur().ajouterPieces(1);
 	}
+	
+	public void utiliserPouvoirAvatar() {
+		
+		super.getJoueur().ajouterPieces(1);
+	}
 
 }

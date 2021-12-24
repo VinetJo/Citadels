@@ -1,5 +1,7 @@
 package modele;
 
+import java.util.Random;
+
 import controleur.Interaction;
 
 public class Condottiere extends Personnage{
@@ -49,6 +51,44 @@ public class Condottiere extends Personnage{
 						
 						super.getPlateau().getJoueur(temp2).retirerQuartierDansCite
 						(super.getPlateau().getJoueur(temp2).getCite()[temp3].getNom());
+						
+						
+						System.out.println("Il vous reste "+ super.getJoueur().nbPieces()  + " pièces dans votre trésor");
+					}
+				}while(boucle);
+				
+			}
+			
+			
+		}
+	}
+	
+	public void utiliserPouvoirAvatar() {
+		Random ran = new Random();
+		System.out.println("Voulez vous utiliser votre pouvoir de destruction ?");
+		boolean temp = ran.nextBoolean();
+		if(temp) {
+			int temp2  = ran.nextInt(super.getPlateau().getNombreJoueurs());
+			if(temp2!=0 && !super.getPlateau().getJoueur(temp2).getPersonnage().getNom().equals("Eveque")) {
+				boolean boucle;
+				do {
+					boucle = false;
+					int temp3 = ran.nextInt(super.getPlateau().getJoueur(temp2).getCite().length);
+					if(temp3==0) {
+						break;
+					}
+					temp3--;
+					if(super.getJoueur().nbPieces()<(super.getPlateau().getJoueur(temp2).getCite()[temp3].getCout()-1)) {
+						System.out.println("Votre trésor n'est pas suffisant");
+						boucle = true;
+					}else {
+						super.getJoueur().retirerPieces((super.getPlateau().getJoueur(temp2).getCite()[temp3].getCout()-1));
+						
+						System.out.println("=> On retire " + super.getPlateau().getJoueur(temp2).getCite()[temp3].getNom() 
+								+ " de " + super.getPlateau().getJoueur(temp2).getNom());
+						
+						super.getPlateau().getJoueur(temp2).retirerQuartierDansCite
+						(super.getPlateau().getJoueur(temp2).getCite()[temp3].getNom()); 
 						
 						
 						System.out.println("Il vous reste "+ super.getJoueur().nbPieces()  + " pièces dans votre trésor");
