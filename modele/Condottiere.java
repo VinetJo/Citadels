@@ -65,7 +65,6 @@ public class Condottiere extends Personnage{
 	
 	public void utiliserPouvoirAvatar() {
 		Random ran = new Random();
-		System.out.println("Voulez vous utiliser votre pouvoir de destruction ?");
 		boolean temp = ran.nextBoolean();
 		if(temp) {
 			int temp2  = ran.nextInt(super.getPlateau().getNombreJoueurs());
