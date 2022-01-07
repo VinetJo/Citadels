@@ -12,10 +12,10 @@ public class Jeu {
 	private int numeroConfiguration;
 	private Random generateur = new Random();
 	
-	public Jeu(PlateauDeJeu plateauDeJeu, int numeroConfiguration, Random generateur) {
+	public Jeu(PlateauDeJeu plateauDeJeu, int numeroConfiguration) {
 		this.plateauDeJeu = plateauDeJeu;
 		this.numeroConfiguration = numeroConfiguration;
-		this.generateur = generateur;
+		this.generateur = new Random();
 	}
 	
 	public void jouer() {
@@ -132,7 +132,6 @@ public class Jeu {
 				for(int n = 1; n<this.plateauDeJeu.getNombreJoueurs(); n++) {
 					int temp4 = generateur.nextInt(listePerso.size());
 					for(int o = 0; o<this.plateauDeJeu.getNombrePersonnages();o++) {
-						
 						if(listePerso.get(temp4).equals(this.plateauDeJeu.getPersonnage(o))) {
 							this.plateauDeJeu.getPersonnage(o).setJoueur(this.plateauDeJeu.getJoueur(n));
 							listePerso.remove(temp4);
@@ -140,10 +139,50 @@ public class Jeu {
 					}
 				}
 				
-			}else if(this.plateauDeJeu.getJoueur(k).getPossedeCouronne()==true ) {
+			}else if(this.plateauDeJeu.getJoueur(k).getPossedeCouronne()==true) {
+				//Si un bot à la couronne
+				int temp5 = generateur.nextInt(listePerso.size());
+				for(int o = 0; o<this.plateauDeJeu.getNombrePersonnages();o++) {
+					if(listePerso.get(temp5).equals(this.plateauDeJeu.getPersonnage(o))) {
+						this.plateauDeJeu.getPersonnage(o).setJoueur(this.plateauDeJeu.getJoueur(k));
+						listePerso.remove(temp5);
+					}
+				}
+				
+				for(int n = 0; n<this.plateauDeJeu.getNombreJoueurs(); n++) {
+					if(n==0) {
+						System.out.println("C'est à votre tour");
+						for(int l = 0; l<listePerso.size(); l++) {
+							System.out.println((l+1)+" : "+listePerso.get(l).getRang() + " - " + listePerso.get(l).getNom());
+						}
+						System.out.println("Quel personnage choisissez-vous ?");
+						int temp3 = Interaction.lireUnEntier(1, listePerso.size()+1);
+						temp3--;
+							
+						for(int m = 0; m<this.plateauDeJeu.getNombrePersonnages();m++) {
+							if(listePerso.get(temp3).equals(this.plateauDeJeu.getPersonnage(m))) {
+								this.plateauDeJeu.getPersonnage(m).setJoueur(this.plateauDeJeu.getJoueur(0));
+								listePerso.remove(temp3);
+							}
+						}
+					
+					}else if(n!=k){
+						int temp4 = generateur.nextInt(listePerso.size());
+						for(int o = 0; o<this.plateauDeJeu.getNombrePersonnages();o++) {
+							if(listePerso.get(temp4).equals(this.plateauDeJeu.getPersonnage(o))) {
+								this.plateauDeJeu.getPersonnage(o).setJoueur(this.plateauDeJeu.getJoueur(n));
+								listePerso.remove(temp4);
+							}
+						}
+					}
+				}
+				
 				
 			}
 		}
+		
+		
+		System.out.println("Tout le monde à son personnage attribué !");
 		
 		
 		
