@@ -101,7 +101,9 @@ public class Jeu {
 			System.out.println("Un personnage est écarté face caché");	
 			listePerso.remove(generateur.nextInt(listePerso.size()+1));
 		}
+		
 		for(int k = 0; k<this.plateauDeJeu.getNombreJoueurs();k++) {
+			//Si le joueur principal à la couronne
 			if(this.plateauDeJeu.getJoueur(k).getPossedeCouronne()==true && this.plateauDeJeu.getJoueur(k).equals(this.plateauDeJeu.getJoueur(0))) {
 				System.out.println("Vous avez la couronne ! ");
 				for(int l = 0; l<listePerso.size(); l++) {
@@ -110,16 +112,36 @@ public class Jeu {
 				System.out.println("Quel personnage choisissez-vous ?");
 				boolean continu;
 				int temp3;
-				do {
+				//do {
 					continu = false;
-					temp3 = Interaction.lireUnEntier(1, 9);
+					temp3 = Interaction.lireUnEntier(1, listePerso.size()+1);
 					temp3--;
+					/*
 					if(!listePerso.get(temp3).equals(this.plateauDeJeu.getPersonnage(temp3))) {
 						System.out.println("Mauvaise saisie veuillez recommencer");
 						continu = true;
+					}*/
+					
+				//}while(continu);
+				for(int m = 0; m<this.plateauDeJeu.getNombrePersonnages();m++) {
+					if(listePerso.get(temp3).equals(this.plateauDeJeu.getPersonnage(m))) {
+						this.plateauDeJeu.getPersonnage(m).setJoueur(this.plateauDeJeu.getJoueur(0));
+						listePerso.remove(temp3);
 					}
-				}while(continu);
-				this.plateauDeJeu.getPersonnage(temp3).setJoueur(this.plateauDeJeu.getJoueur(0));
+				}
+				for(int n = 1; n<this.plateauDeJeu.getNombreJoueurs(); n++) {
+					int temp4 = generateur.nextInt(listePerso.size());
+					for(int o = 0; o<this.plateauDeJeu.getNombrePersonnages();o++) {
+						
+						if(listePerso.get(temp4).equals(this.plateauDeJeu.getPersonnage(o))) {
+							this.plateauDeJeu.getPersonnage(o).setJoueur(this.plateauDeJeu.getJoueur(n));
+							listePerso.remove(temp4);
+						}
+					}
+				}
+				
+			}else if(this.plateauDeJeu.getJoueur(k).getPossedeCouronne()==true ) {
+				
 			}
 		}
 		
