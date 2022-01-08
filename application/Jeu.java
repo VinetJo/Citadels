@@ -342,16 +342,59 @@ public class Jeu {
 	}
 	
 	private void percevoirRessource(int i) {
-		System.out.println("Choisissez entre deux pièces d'or (1) ou deux cartes de la pioche et n'en garder qu'une seule (2)");
-		int temp = Interaction.lireUnEntier(1,3);
-		if(temp==1) {
-			this.plateauDeJeu.getPersonnage(i).getJoueur().ajouterPieces(2);
-		}else if(temp==2) {
-			ArrayList<Quartier> tempListe = new ArrayList<Quartier>();
-			//recup pioche PROBLEME A REGLER
+		if(this.plateauDeJeu.getPersonnage(i).getJoueur().equals(this.plateauDeJeu.getJoueur(0))) {
+			//Utilisateur perception
+			System.out.println("Choisissez entre deux pièces d'or (1) ou deux cartes de la pioche et n'en garder qu'une seule (2)");
+			int temp = Interaction.lireUnEntier(1,3);
+			if(temp==1) {
+				this.plateauDeJeu.getPersonnage(i).getJoueur().ajouterPieces(2);
+			}else if(temp==2) {
+				ArrayList<Quartier> tempListe = new ArrayList<Quartier>();
+				for(int j = 0; j<2; j++) {
+					tempListe.add(this.plateauDeJeu.getPioche().piocher());
+					System.out.println((j+1)+"- " +tempListe.get(j));
+				}
+				System.out.println("Quelle carte gardez-vous ?");
+				int temp2 = Interaction.lireUnEntier(1,3);
+				if(temp2==1) {
+					this.plateauDeJeu.getPersonnage(i).getJoueur().ajouterQuartierDansMain(tempListe.get(0));
+				}else if(temp2==2) {
+					this.plateauDeJeu.getPersonnage(i).getJoueur().ajouterQuartierDansMain(tempListe.get(1));
+				}else {
+					System.out.println("Erreur perception ressource");
+				}
+				
+				
+			}else {
+				System.out.println("Erreur manipulation annulation percepetion ressource");
+			}
 		}else {
-			System.out.println("Erreur manipulation annulation percepetion ressource");
+			//Bot perception
+			int temp = generateur.nextInt(2);
+			if(temp==0) {
+				System.out.println("Pieces +2");
+				this.plateauDeJeu.getPersonnage(i).getJoueur().ajouterPieces(2);
+			}else if(temp==1) {
+				System.out.println("Pioche cartes");
+				ArrayList<Quartier> tempListe = new ArrayList<Quartier>();
+				for(int j = 0; j<2; j++) {
+					tempListe.add(this.plateauDeJeu.getPioche().piocher());
+				}
+				int temp2 = generateur.nextInt(2);
+				if(temp2==0) {
+					this.plateauDeJeu.getPersonnage(i).getJoueur().ajouterQuartierDansMain(tempListe.get(0));
+				}else if(temp2==1) {
+					this.plateauDeJeu.getPersonnage(i).getJoueur().ajouterQuartierDansMain(tempListe.get(1));
+				}else {
+					System.out.println("Erreur perception ressource");
+				}
+				
+				
+			}else {
+				System.out.println("Erreur manipulation annulation percepetion ressource");
+			}
 		}
+		
 	}
 	
 	private void calculDesPoints() {
