@@ -12,8 +12,8 @@ public class Jeu {
 	private int numeroConfiguration;
 	private Random generateur = new Random();
 	
-	public Jeu(PlateauDeJeu plateauDeJeu, int numeroConfiguration) {
-		this.plateauDeJeu = plateauDeJeu;
+	public Jeu(int numeroConfiguration) {
+		this.plateauDeJeu = new PlateauDeJeu(); 
 		this.numeroConfiguration = numeroConfiguration;
 		this.generateur = new Random();
 	}
@@ -63,6 +63,7 @@ public class Jeu {
 				this.plateauDeJeu.getJoueur(i).ajouterQuartierDansMain(pioche.piocher());
 			}			
 		}
+		
 		this.plateauDeJeu.getJoueur(0).setPossedeCouronne(true);
 		
 		
@@ -83,7 +84,158 @@ public class Jeu {
 	}
 	
 	private void tourDeJeu() {
-		
+		System.out.println("Debut du tour de jeu.");
+		choixPersonnage();
+		for(int i = 0; i<this.plateauDeJeu.getNombrePersonnages(); i++) {
+			System.out.println("Le personnage " + this.plateauDeJeu.getPersonnage(i).getNom() + " est appelé" );
+			if(this.plateauDeJeu.getPersonnage(i).getAssassine()) {
+				System.out.println("Le personnage est assassiné, il ne peut pas jouer");
+			}else {
+				if(this.plateauDeJeu.getPersonnage(i).getVole()) {
+					System.out.println("Le personnage est volé, le joueur perd ses pièces.");
+				}
+				//Personnage utilisateur appelé
+				if(this.plateauDeJeu.getPersonnage(i).getJoueur().equals(this.plateauDeJeu.getJoueur(0))) {
+					System.out.println("Votre personnage est appelé");
+					percevoirRessource(i);
+					System.out.println("Recupération ressources spécifiques");
+					this.plateauDeJeu.getPersonnage(i).percevoirRessourcesSpecifiques();
+					System.out.println("Souhaitez vous utiliser votre pouvoir ?");
+					boolean tempB = Interaction.lireOuiOuNon();
+					if(tempB) {
+						this.plateauDeJeu.getPersonnage(i).utiliserPouvoir();
+					}else {
+						System.out.println("Votre pouvoir n'est pas utilisé");
+					}
+					System.out.println("Souhaitez vous construire un nouveaux quartier ?");
+					tempB = Interaction.lireOuiOuNon();
+					if(tempB) {
+						System.out.println("Quel quartier voulez vous construire ?");
+						for(int j = 0; j<this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().size(); j++) {
+							System.out.println((j+1)+" - "+this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().get(j) + " "); 
+						}
+						if(this.plateauDeJeu.getPersonnage(i).getNom().equals("Architecte")) {
+							System.out.println("Vous êtes architecte vous pouvez construire jursqu'à 3 quartiers");
+							System.out.println("Combien voulez en construire : ");
+							int temp2 = Interaction.lireUnEntier(0, 4);
+							for(int k = 0; k< temp2; k++) {
+								boolean continu = false;
+								System.out.println("Quel cartes construisez vous ? (pour annuler choisir 0)");
+								int temp = 0;
+								do {
+									temp = Interaction.lireUnEntier(0, this.plateauDeJeu.getPersonnage(i).getJoueur().nbQuartiersDansMain());
+									temp--;
+									if(temp==-1) {
+										System.out.println("Annulation construction");
+										continu = false;
+									} else if(this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().get(temp).getCout()>
+									this.plateauDeJeu.getPersonnage(i).getJoueur().nbPieces()) {
+										System.out.println("Impossible vous n'avez plus assez de pièces choisir un autre quartier.");
+										continu = true;
+									}else {
+										Quartier quart =  new Quartier();
+										quart = this.plateauDeJeu.getPersonnage(i).getJoueur().retirerQuartierDansMain();
+										this.plateauDeJeu.getPersonnage(i).construire(quart);
+										continu = false;
+									}
+								}while(continu);
+							}
+						}else {
+							boolean continu = false;
+							System.out.println("Quel cartes construisez vous ? (pour annuler choisir 0)");
+							int temp = 0;
+							do {
+								temp = Interaction.lireUnEntier(0, this.plateauDeJeu.getPersonnage(i).getJoueur().nbQuartiersDansMain());
+								temp--;
+								if(temp==-1) {
+									System.out.println("Annulation construction");
+									continu = false;
+								} else if(this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().get(temp).getCout()>
+								this.plateauDeJeu.getPersonnage(i).getJoueur().nbPieces()) {
+									System.out.println("Impossible vous n'avez plus assez de pièces choisir un autre quartier.");
+									continu = true;
+								}else {
+									Quartier quart =  new Quartier();
+									quart = this.plateauDeJeu.getPersonnage(i).getJoueur().retirerQuartierDansMain();
+									this.plateauDeJeu.getPersonnage(i).construire(quart);
+									continu = false;
+								}
+							}while(continu);						
+						}
+					}
+					//Bot appelé
+				}else {
+					percevoirRessource(i);
+					this.plateauDeJeu.getPersonnage(i).percevoirRessourcesSpecifiques();
+					System.out.println("Souhaitez vous utiliser votre pouvoir ?");
+					boolean tempB = generateur.nextBoolean();
+					System.out.println(tempB);
+					if(tempB) {
+						this.plateauDeJeu.getPersonnage(i).utiliserPouvoirAvatar();
+					}else {
+						System.out.println("Le pouvoir n'est pas utilisé");
+					}
+					System.out.println("Souhaitez vous construire un nouveaux quartier ?");
+					tempB =  generateur.nextBoolean();
+					System.out.println(tempB);
+					if(tempB) {
+						System.out.println("Quel quartier voulez vous construire ?");
+						if(this.plateauDeJeu.getPersonnage(i).getNom().equals("Architecte")) {
+							System.out.println("Vous êtes architecte vous pouvez construire jursqu'à 3 quartiers");
+							System.out.println("Combien voulez en construire : ");
+							int temp2 = generateur.nextInt(4);
+							System.out.println(temp2);
+							for(int k = 0; k< temp2; k++) {
+								boolean continu = false;
+								System.out.println("Quel cartes construisez vous ? (pour annuler choisir 0)");
+								int temp = 0;
+								do {
+									temp = generateur.nextInt(0, this.plateauDeJeu.getPersonnage(i).getJoueur().nbQuartiersDansMain());
+									temp--;
+									if(temp==-1) {
+										System.out.println("Annulation construction");
+										continu = false;
+									} else if(this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().get(temp).getCout()>
+									this.plateauDeJeu.getPersonnage(i).getJoueur().nbPieces()) {
+										System.out.println("Impossible le nombre de pieces est insufisant.");
+										continu = true;
+									}else {
+										Quartier quart =  new Quartier();
+										quart = this.plateauDeJeu.getPersonnage(i).getJoueur().retirerQuartierDansMain();
+										this.plateauDeJeu.getPersonnage(i).construire(quart);
+										System.out.println(quart.getNom());
+										continu = false;
+									}
+								}while(continu);
+							}
+						}else {
+							boolean continu = false;
+							System.out.println("Quel cartes construisez vous ? (pour annuler choisir 0)");
+							int temp = 0;
+							do {
+								temp = generateur.nextInt(0, this.plateauDeJeu.getPersonnage(i).getJoueur().nbQuartiersDansMain());
+								temp--;
+								if(temp==-1) {
+									System.out.println("Annulation construction");
+									continu = false;
+								} else if(this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().get(temp).getCout()>
+								this.plateauDeJeu.getPersonnage(i).getJoueur().nbPieces()) {
+									System.out.println("Impossible le nombre de pieces est insufisant.");
+									continu = true;
+								}else {
+									Quartier quart =  new Quartier();
+									quart = this.plateauDeJeu.getPersonnage(i).getJoueur().retirerQuartierDansMain();
+									this.plateauDeJeu.getPersonnage(i).construire(quart);
+									System.out.println(quart.getNom());
+									continu = false;
+								}
+							}while(continu);						
+						}
+					}
+				}
+			}
+			System.out.println("Fin tour du " + this.plateauDeJeu.getPersonnage(i).getNom());
+		}
 	}
 	
 	private void choixPersonnage() {
@@ -153,7 +305,7 @@ public class Jeu {
 					if(n==0) {
 						System.out.println("C'est à votre tour");
 						for(int l = 0; l<listePerso.size(); l++) {
-							System.out.println((l+1)+" : "+listePerso.get(l).getRang() + " - " + listePerso.get(l).getNom());
+							System.out.println(listePerso.get(l).getRang() + " - " + listePerso.get(l).getNom());
 						}
 						System.out.println("Quel personnage choisissez-vous ?");
 						int temp3 = Interaction.lireUnEntier(1, listePerso.size()+1);
@@ -189,8 +341,17 @@ public class Jeu {
 		
 	}
 	
-	private void percevoirRessource() {
-		
+	private void percevoirRessource(int i) {
+		System.out.println("Choisissez entre deux pièces d'or (1) ou deux cartes de la pioche et n'en garder qu'une seule (2)");
+		int temp = Interaction.lireUnEntier(1,3);
+		if(temp==1) {
+			this.plateauDeJeu.getPersonnage(i).getJoueur().ajouterPieces(2);
+		}else if(temp==2) {
+			ArrayList<Quartier> tempListe = new ArrayList<Quartier>();
+			//recup pioche PROBLEME A REGLER
+		}else {
+			System.out.println("Erreur manipulation annulation percepetion ressource");
+		}
 	}
 	
 	private void calculDesPoints() {

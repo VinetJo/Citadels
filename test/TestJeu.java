@@ -11,13 +11,12 @@ public class TestJeu {
 	}
 	
 	public static void test1() {
-		Pioche p = new Pioche();
-		Configuration config = new Configuration();
-		p = config.nouvellePioche();
-		PlateauDeJeu plateau = new PlateauDeJeu();
-		plateau = config.configurationDeBase(p);
-		Jeu partieJeu = new Jeu(plateau, 0);
+		Jeu partieJeu = new Jeu(0);
 		partieJeu.jouer();
+		
+	}
+	
+	public static void test2() {
 		
 	}
 

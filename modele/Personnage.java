@@ -114,7 +114,7 @@ public abstract class Personnage {
 	
 	public String percevoirRessourcesSpecifiques() {
 		if(!this.getAssassine() && this.joueur!=null ) {
-			return "Aucune Ressource Spï¿½cifique";
+			return "Aucune Ressource Spécifique";
 		}
 		return "";
 		
