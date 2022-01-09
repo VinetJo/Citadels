@@ -50,7 +50,7 @@ public class Jeu {
 			gestionCouronne();
 			reinitianilisationPersonnages();			
 		}while(!partieFinie());
-		
+		calculDesPoints();
 	}
 	
 	private void initialisation() {
@@ -70,16 +70,37 @@ public class Jeu {
 	}
 	
 	private void gestionCouronne() {
+		System.out.println("Attribution couronne nouveau roi sinon l'ancien roi garde sa couronne.");
+		for(int i =0; i<this.plateauDeJeu.getNombreJoueurs();i++) {
+			if(this.plateauDeJeu.getJoueur(i).getPersonnage().getNom().equals("Roi")) {
+				System.out.println("Attribution de la couronne au joueur " + this.plateauDeJeu.getJoueur(i).getNom());
+				for(int j = 0; j<this.plateauDeJeu.getNombreJoueurs();j++) {
+					if(this.plateauDeJeu.getJoueur(j).getPossedeCouronne()) {
+						//Mise a false du dernier detenteur de la couronne
+						this.plateauDeJeu.getJoueur(j).setPossedeCouronne(false);
+					}
+				this.plateauDeJeu.getJoueur(i).setPossedeCouronne(true);
+				}
+			}
+		}
 		
 	}
 	
 	private void reinitianilisationPersonnages() {
-		
+		System.out.println("- Reinitialisation des personnages -");
+		for(int i =0 ; i<this.plateauDeJeu.getNombrePersonnages();i++) {
+			this.plateauDeJeu.getPersonnage(i).setJoueur(null);
+		}
 	}
 	
 	private boolean partieFinie() {
-		
-		return true;
+		for(int i = 0; i<this.plateauDeJeu.getNombreJoueurs(); i++) {
+			if(this.plateauDeJeu.getJoueur(i).nbQuartiersDansCite()>=7) {
+				System.out.println("Le joueur " + this.plateauDeJeu.getJoueur(i).getNom() + " possède une cité complète, la partie est finie");
+				return true;
+			}
+		}
+		return false;
 		
 	}
 	
@@ -262,11 +283,8 @@ public class Jeu {
 					System.out.println(listePerso.get(l).getRang() + " - " + listePerso.get(l).getNom());
 				}
 				System.out.println("Quel personnage choisissez-vous ?");
-				boolean continu;
-				int temp3;
 				//do {
-					continu = false;
-					temp3 = Interaction.lireUnEntier(1, listePerso.size()+1);
+					int temp3 = Interaction.lireUnEntier(1, listePerso.size()+1);
 					temp3--;
 					/*
 					if(!listePerso.get(temp3).equals(this.plateauDeJeu.getPersonnage(temp3))) {
@@ -398,7 +416,32 @@ public class Jeu {
 	}
 	
 	private void calculDesPoints() {
-		
+		for(int i =0; i<this.plateauDeJeu.getNombreJoueurs(); i++) {
+			int nbrPoints = 0;
+			int qNoble =0;
+			int qCommercant =0;
+			int qReligieux =0;
+			int qMilitaire =0;
+			int qMerveille =0;
+			System.out.println("Calcul points pour le joueur " + this.plateauDeJeu.getJoueur(i).getNom());
+			for(int j = 0; j<this.plateauDeJeu.getJoueur(i).nbQuartiersDansCite(); j++ ) {
+				nbrPoints += this.plateauDeJeu.getJoueur(i).getCite()[j].getCout();
+				if(this.plateauDeJeu.getJoueur(i).getCite()[i].getType().equals("NOBLE")) {
+					qNoble++;
+				}else if(this.plateauDeJeu.getJoueur(i).getCite()[i].getType().equals("COMMERCANT")) {
+					qCommercant++;
+				}else if(this.plateauDeJeu.getJoueur(i).getCite()[i].getType().equals("RELIGIEUX")) {
+					qReligieux++;
+				}else if(this.plateauDeJeu.getJoueur(i).getCite()[i].getType().equals("MILITAIRE")) {
+					qMilitaire++;
+				}else if(this.plateauDeJeu.getJoueur(i).getCite()[i].getType().equals("MERVEILLE")) {
+					qMerveille++;
+				}
+			}
+			if(qNoble>=1 && qCommercant>=1 && qReligieux>=1 && qMilitaire>=1 && qMerveille>=1 ) {
+				nbrPoints += 3;
+			}
+		}
 	}
 	
 
