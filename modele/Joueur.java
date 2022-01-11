@@ -13,6 +13,8 @@ public class Joueur {
 	private int nbQuartier = 0;
 	private ArrayList<Quartier> main = new ArrayList<Quartier>();
 	private boolean possedeCouronne = false;
+	protected Personnage monPersonnage = null;
+
 	
 	
 	public Joueur(String nom) {
@@ -21,8 +23,14 @@ public class Joueur {
 		this.nbQuartier = 0;
 		this.main = new ArrayList<Quartier>();
 		this.possedeCouronne = false;
+		this.monPersonnage = null;
 		
 	}
+	
+	public Personnage getPersonnage() {
+		return monPersonnage;
+	}
+	
 
 
 	/**
@@ -39,19 +47,6 @@ public class Joueur {
 	public int nbPieces() {
 		return tresor;
 	}
-	
-	public int nbQuartiersDansCite() {
-		int nbQuartiersDansCite =0;
-		for(int i = 0; i<cite.length ; i++) {
-			if(cite[i]!=null && !cite[i].getNom().equals("") ) {
-				nbQuartiersDansCite++;
-			}else if(cite[i]==null) {
-				continue;
-			}
-		}
-		return nbQuartiersDansCite;
-	}
-
 
 	/**
 	 * @return the cite
@@ -104,6 +99,20 @@ public class Joueur {
 		}
 	}
 	
+	
+	public int nbQuartiersDansCite() {
+		int nbQuartiersDansCite =0;
+		for(int i = 0; i<cite.length ; i++) {
+			if(cite[i]!=null && !cite[i].getNom().equals("") ) {
+				nbQuartiersDansCite++;
+			}else if(cite[i]==null) {
+				continue;
+			}
+		}
+		return nbQuartiersDansCite;
+	}
+	
+	
 	public void ajouterQuartierDansCite(Quartier quart) {
 		int compteur =0;
 		boolean ajouter = false;
@@ -134,25 +143,32 @@ public class Joueur {
 		Quartier quart = null;
 		int compteur =0;
 		do {
-			if(cite[compteur].getNom() == nomQuartier) {
+			if(this.cite[compteur].getNom() == nomQuartier) {
 				
-				/* Autre methode (a voir)
+				// Autre methode (a voir)
+				/*
 				quart = cite[compteur];
 				cite[compteur] = new Quartier();
 				
 				return quart;
 				*/
 				
-				quart = cite[compteur];
-				for(int j=0; j< (this.nbQuartiersDansCite() - (compteur+1)) ;j++) {
-					cite[compteur] = cite[compteur+1];
-					cite[compteur+1] = null;
+				quart = this.cite[compteur];
+				int j = 0;
+				int temp = (this.nbQuartiersDansCite() - (compteur+1));
+				for(j=0; j< temp ;j++) {
+					this.cite[compteur+j] = this.cite[compteur+1+j];
+					this.cite[compteur+1+j] = new Quartier();
+				}
+				if(j==0) {
+					this.cite[compteur] = new Quartier();
 				}
 											
 				return quart;
+				
 			}
 			compteur++;
-		}while(compteur<cite.length);
+		}while(compteur<this.cite.length);
 		
 		
 		return quart;

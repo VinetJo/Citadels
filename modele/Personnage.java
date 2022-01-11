@@ -3,6 +3,8 @@
  */
 package modele;
 
+import java.util.Random;
+
 public abstract class Personnage {
 	
 	private String nom="";
@@ -75,6 +77,7 @@ public abstract class Personnage {
 	 */
 	public void setJoueur(Joueur joueur) {
 		this.joueur = joueur;
+		this.joueur.monPersonnage = this;
 	}
 
 	/**
@@ -111,7 +114,7 @@ public abstract class Personnage {
 	
 	public String percevoirRessourcesSpecifiques() {
 		if(!this.getAssassine() && this.joueur!=null ) {
-			return "Aucune Ressource Spï¿½cifique";
+			return "Aucune Ressource Spécifique";
 		}
 		return "";
 		
@@ -124,10 +127,15 @@ public abstract class Personnage {
 		
 	}
 	
+	public void utiliserPouvoirAvatar() {
+		
+	}
+	
 	public void reinitialiser() {
 		this.joueur = null;
 		this.assassine = false;
 		this.vole = false;
+		this.joueur.monPersonnage = null;
 	}
 
 	public PlateauDeJeu getPlateau() {

@@ -5,12 +5,12 @@ public class TestQuartier {
 	public static void main(String[] args){
 		TestQuartier testQuartier = new TestQuartier();
 		//testQuartier.test1();	
-		//testQuartier.test2();
+		testQuartier.test2();
 		//testQuartier.test3();
 		//testQuartier.test4();
 		//testQuartier.test5();
 		//testQuartier.test6();
-		testQuartier.test7();
+		//testQuartier.test7();
 	}
 
 	public void test1(){
@@ -29,6 +29,9 @@ public class TestQuartier {
 		Test.test(quartier.getType().equals("RELIGIEUX"),"test du type du quartier");
 		Test.test(quartier.getCout() == 1,"test du cout du quartier");
 		Test.test(quartier.getCaracteristiques().equals(""),"test des caracteristiques du quartier");
+		quartier.setType(Quartier.TYPE_QUARTIERS[3]);
+		System.out.println(quartier.toString() + " bhjghj");
+		Test.test(quartier.getType().equals("COMMERCANT"),"test du type du quartier");
 	}
 
 	public void test3(){

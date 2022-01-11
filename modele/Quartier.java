@@ -24,7 +24,8 @@ public class Quartier {
 		for(int i = 0; i<this.TYPE_QUARTIERS.length;i++) {
 			if(type.equals(TYPE_QUARTIERS[i])) {
 				this.type = type;
-			}else if(i==(this.TYPE_QUARTIERS.length-1)) {
+			}
+			if(i==(this.TYPE_QUARTIERS.length-1)&& this.type!=type) {
 				this.type="";
 				}
 			}
@@ -66,5 +67,12 @@ public class Quartier {
 	public Quartier() {
 		
 	}
+
+	@Override
+	public String toString() {
+		return "" + nom + " - type: " + type + " - pièces: " + coutConstruction;
+	}
+	
+	
 
 }

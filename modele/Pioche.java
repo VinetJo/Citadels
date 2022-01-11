@@ -6,6 +6,10 @@ import java.util.Collections;
 public class Pioche {
 	private ArrayList<Quartier> liste = new ArrayList<Quartier>();
 	
+	public ArrayList<Quartier> getListe() {
+		return liste;
+	}
+
 	public Pioche() {
 		this.liste = new ArrayList<Quartier>();
 	}
