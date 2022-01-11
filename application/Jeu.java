@@ -286,7 +286,7 @@ public class Jeu {
 				//do {
 					int temp3 = Interaction.lireUnEntier(1, listePerso.size()+1);
 					temp3--;
-					/*
+					/* idée non aboutis
 					if(!listePerso.get(temp3).equals(this.plateauDeJeu.getPersonnage(temp3))) {
 						System.out.println("Mauvaise saisie veuillez recommencer");
 						continu = true;
@@ -299,6 +299,7 @@ public class Jeu {
 						listePerso.remove(temp3);
 					}
 				}
+				//Choix perso pour les bot
 				for(int n = 1; n<this.plateauDeJeu.getNombreJoueurs(); n++) {
 					int temp4 = generateur.nextInt(listePerso.size());
 					for(int o = 0; o<this.plateauDeJeu.getNombrePersonnages();o++) {
@@ -416,6 +417,7 @@ public class Jeu {
 	}
 	
 	private void calculDesPoints() {
+		boolean prems = false;
 		for(int i =0; i<this.plateauDeJeu.getNombreJoueurs(); i++) {
 			int nbrPoints = 0;
 			int qNoble =0;
@@ -424,6 +426,7 @@ public class Jeu {
 			int qMilitaire =0;
 			int qMerveille =0;
 			System.out.println("Calcul points pour le joueur " + this.plateauDeJeu.getJoueur(i).getNom());
+			//cout construction cite = pts
 			for(int j = 0; j<this.plateauDeJeu.getJoueur(i).nbQuartiersDansCite(); j++ ) {
 				nbrPoints += this.plateauDeJeu.getJoueur(i).getCite()[j].getCout();
 				if(this.plateauDeJeu.getJoueur(i).getCite()[i].getType().equals("NOBLE")) {
@@ -438,9 +441,22 @@ public class Jeu {
 					qMerveille++;
 				}
 			}
+			//Si tout type de quartier
 			if(qNoble>=1 && qCommercant>=1 && qReligieux>=1 && qMilitaire>=1 && qMerveille>=1 ) {
 				nbrPoints += 3;
 			}
+			//Si premier ou non et avoir 7 quartier 
+			if(this.plateauDeJeu.getJoueur(i).nbQuartiersDansCite()==7 && prems==false) {
+				nbrPoints +=4;
+				prems = true;
+			}else if(this.plateauDeJeu.getJoueur(i).nbQuartiersDansCite()==7 && prems==true) {
+				nbrPoints +=2;
+			}
+			//Ajout spé merveille
+			
+			System.out.println("Le joueur "+ this.plateauDeJeu.getJoueur(i).getNom()+ " possède " + nbrPoints + " de points");
+			
+			
 		}
 	}
 	
