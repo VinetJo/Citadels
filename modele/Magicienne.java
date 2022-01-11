@@ -170,7 +170,7 @@ public class Magicienne extends Personnage{
 				}else {
 					for(int l =0; l<temp2; l++) {
 												
-						int temp3 = ran.nextInt(1, (super.getJoueur().getMain().size()+1));
+						int temp3 = ran.nextInt((super.getJoueur().getMain().size()));
 						temp3--;
 						super.getPlateau().getPioche().ajouter(copieTableau.get(temp3));
 

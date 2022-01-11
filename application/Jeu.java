@@ -211,7 +211,7 @@ public class Jeu {
 								System.out.println("Quel cartes construisez vous ? (pour annuler choisir 0)");
 								int temp = 0;
 								do {
-									temp = generateur.nextInt(0, this.plateauDeJeu.getPersonnage(i).getJoueur().nbQuartiersDansMain());
+									temp = generateur.nextInt(this.plateauDeJeu.getPersonnage(i).getJoueur().nbQuartiersDansMain());
 									temp--;
 									if(temp==-1) {
 										System.out.println("Annulation construction");
