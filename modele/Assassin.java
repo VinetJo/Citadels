@@ -24,8 +24,14 @@ public class Assassin extends Personnage{
 			if(super.getPlateau().getPersonnage(entier).getNom().equals("Assassin")) {
 				System.out.println("Vous ne pouvez pas vous assassiner.");
 			}else {
-				System.out.println("Vous assassinez : " + super.getPlateau().getPersonnage(entier).getNom());
-				super.getPlateau().getPersonnage(entier).setAssassine();
+				
+				if(super.getPlateau().getPersonnage(entier).getJoueur()!=null) {
+					System.out.println("Vous assassinez : " + super.getPlateau().getPersonnage(entier).getNom());
+					super.getPlateau().getPersonnage(entier).setAssassine();					
+				}else {
+					System.out.println("Aucun joueur ne possédait ce personnage");
+				}
+
 				continu = false;
 			}
 		}while(continu);
@@ -40,8 +46,13 @@ public class Assassin extends Personnage{
 			
 			if(!super.getPlateau().getPersonnage(entierRan).getNom().equals("Assassin")) {
 				
-				System.out.println("Vous assassinez : " + super.getPlateau().getPersonnage(entierRan).getNom());
-				super.getPlateau().getPersonnage(entierRan).setAssassine();
+				if(super.getPlateau().getPersonnage(entierRan).getJoueur()!=null) {
+					System.out.println("Vous assassinez : " + super.getPlateau().getPersonnage(entierRan).getNom());
+					super.getPlateau().getPersonnage(entierRan).setAssassine();
+				}else {
+					System.out.println("Aucun joueur ne possédait ce personnage");
+				}
+				
 				continu = false;
 				
 			}

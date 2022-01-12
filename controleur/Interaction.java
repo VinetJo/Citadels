@@ -52,7 +52,7 @@ public class Interaction {
 		boolean continu = true;
 		do {
 				chaine = sc.nextLine();
-				
+				System.out.println(chaine+ "test dans interaction.class");
 				if(chaine.toLowerCase().equals("oui")||chaine.toLowerCase().equals("o")) {
 					retour = true;
 					continu = false;

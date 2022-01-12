@@ -26,10 +26,13 @@ public class Voleur extends Personnage {
 			}else if(super.getPlateau().getPersonnage(entier).getRang()==1) {
 				System.out.println("Impossible de voler un personnage rang 1");
 			}else {
-				
-				super.getPlateau().getPersonnage(entier).setVole();
-				super.getJoueur().ajouterPieces(super.getPlateau().getJoueur(entier).nbPieces());
-				super.getPlateau().getJoueur(entier).retirerPieces(super.getPlateau().getJoueur(entier).nbPieces());
+				if(super.getPlateau().getPersonnage(entier).getJoueur()!=null) {
+					super.getPlateau().getPersonnage(entier).setVole();
+					super.getJoueur().ajouterPieces(super.getPlateau().getJoueur(entier).nbPieces());
+					super.getPlateau().getJoueur(entier).retirerPieces(super.getPlateau().getJoueur(entier).nbPieces());
+				}else {
+					System.out.println("Aucun joueur ne possédait ce personnage");
+				}
 				continu = false;
 			}
 		}while(continu);
@@ -45,11 +48,17 @@ public class Voleur extends Personnage {
 			if(!super.getPlateau().getPersonnage(entierRan).getNom().equals("Voleur") && 
 					super.getPlateau().getPersonnage(entierRan).getRang()!=1) {
 				
-				System.out.println("Vous volez : " + super.getPlateau().getPersonnage(entierRan).getNom());
-				super.getPlateau().getPersonnage(entierRan).setVole();
-				super.getJoueur().ajouterPieces(super.getPlateau().getJoueur(entierRan).nbPieces());
-				super.getPlateau().getJoueur(entierRan).retirerPieces(super.getPlateau().getJoueur(entierRan).nbPieces());
 				continu = false;
+				
+				if(super.getPlateau().getPersonnage(entierRan).getJoueur()!=null) {
+					
+					System.out.println("Vous volez : " + super.getPlateau().getPersonnage(entierRan).getNom());
+					super.getPlateau().getPersonnage(entierRan).setVole();
+					super.getJoueur().ajouterPieces(super.getPlateau().getJoueur(entierRan).nbPieces());
+					super.getPlateau().getJoueur(entierRan).retirerPieces(super.getPlateau().getJoueur(entierRan).nbPieces());
+				}else {
+					System.out.println("Aucun joueur ne possédait ce personnage");
+				}
 			}
 			
 		}while(continu);
