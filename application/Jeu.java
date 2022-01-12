@@ -267,11 +267,14 @@ public class Jeu {
 		}
 		System.out.println("Choix des personnages : ");
 		//Mise de coté cartes
-		int temp = generateur.nextInt(generateur.nextInt(listePerso.size()+1));
+		int test1 = generateur.nextInt(listePerso.size()+1);
+		System.out.println(test1 + " size ");
+		int temp = generateur.nextInt(test1);
 		System.out.println("Le personnage '" + listePerso.get(temp).getNom() + "' est écarté face visible");	
 		listePerso.remove(temp);
 		for(int j=0; j<2; j++) {
 			System.out.println("Un personnage est écarté face caché");	
+			System.out.println(listePerso.size());
 			listePerso.remove(generateur.nextInt(listePerso.size()+1));
 		}
 		
@@ -280,7 +283,7 @@ public class Jeu {
 			if(this.plateauDeJeu.getJoueur(k).getPossedeCouronne()==true && this.plateauDeJeu.getJoueur(k).equals(this.plateauDeJeu.getJoueur(0))) {
 				System.out.println("Vous avez la couronne ! ");
 				for(int l = 0; l<listePerso.size(); l++) {
-					System.out.println(listePerso.get(l).getRang() + " - " + listePerso.get(l).getNom());
+					System.out.println((l+1) +": Rang " + listePerso.get(l).getRang() + " - " + listePerso.get(l).getNom());
 				}
 				System.out.println("Quel personnage choisissez-vous ?");
 				//do {
@@ -293,17 +296,25 @@ public class Jeu {
 					}*/
 					
 				//}while(continu);
+					System.out.println(listePerso.get(temp3).getNom());
 				for(int m = 0; m<this.plateauDeJeu.getNombrePersonnages();m++) {
-					if(listePerso.get(temp3).equals(this.plateauDeJeu.getPersonnage(m))) {
+					System.out.println(m + " - " + temp3);
+					System.out.println(this.plateauDeJeu.getPersonnage(m).getNom());
+					if(listePerso.get(temp3).getNom().equals(this.plateauDeJeu.getPersonnage(m).getNom())) {
+						System.out.println("test");
 						this.plateauDeJeu.getPersonnage(m).setJoueur(this.plateauDeJeu.getJoueur(0));
 						listePerso.remove(temp3);
+						break;
 					}
 				}
 				//Choix perso pour les bot
 				for(int n = 1; n<this.plateauDeJeu.getNombreJoueurs(); n++) {
+					System.out.println("size " + listePerso.size());
 					int temp4 = generateur.nextInt(listePerso.size());
 					for(int o = 0; o<this.plateauDeJeu.getNombrePersonnages();o++) {
+						System.out.println(o);
 						if(listePerso.get(temp4).equals(this.plateauDeJeu.getPersonnage(o))) {
+							System.out.println("test2");
 							this.plateauDeJeu.getPersonnage(o).setJoueur(this.plateauDeJeu.getJoueur(n));
 							listePerso.remove(temp4);
 						}
