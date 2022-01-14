@@ -47,12 +47,18 @@ public class Magicienne extends Personnage{
 						for(int j = 0; j<copieTableau.size();j++) {
 							super.getJoueur().retirerQuartierDansMain();
 						}
-						super.getJoueur().getMain().addAll(copieTableau2);
+						for(int k = 0; k<copieTableau2.size();k++) {
+							super.getJoueur().ajouterQuartierDansMain(copieTableau2.get(k));
+						}
+						//super.getJoueur().getMain().addAll(copieTableau2);
 						
 						for(int j = 0; j<copieTableau2.size();j++) {
 							super.getPlateau().getJoueur(temp).retirerQuartierDansMain();
 						}
-						super.getPlateau().getJoueur(temp).getMain().addAll(copieTableau);
+						for(int k = 0; k<copieTableau.size();k++) {
+							super.getPlateau().getJoueur(temp).ajouterQuartierDansMain(copieTableau.get(k));
+						}
+						//super.getPlateau().getJoueur(temp).getMain().addAll(copieTableau);
 						continu = false;
 					}
 				}while(continu);
@@ -98,13 +104,21 @@ public class Magicienne extends Personnage{
 						super.getJoueur().retirerQuartierDansMain();
 						
 					}
-					super.getJoueur().getMain().addAll(copieTableau);
+					for(int k = 0; k<copieTableau.size();k++) {
+						super.getJoueur().ajouterQuartierDansMain(copieTableau.get(k));
+					}
+					//super.getJoueur().getMain().addAll(copieTableau);
 					
 				}
 				
 				
 				
 			}
+			System.out.println("Voici vos cartes :");
+			for(int i = 0; i<super.getJoueur().nbQuartiersDansMain(); i++) {
+				System.out.println(i+1 + "-" + super.getJoueur().getMain().get(i).getNom());
+			}
+			
 			
 		}
 		

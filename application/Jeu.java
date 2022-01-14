@@ -163,6 +163,11 @@ public class Jeu {
 								int temp2 = Interaction.lireUnEntier(0, 4);
 								for(int k = 0; k< temp2; k++) {
 									boolean continu = false;
+									if(k>0) {
+										for(int j = 0; j<this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().size(); j++) {
+											System.out.println((j+1)+" - "+this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().get(j) + " "); 
+										}
+									}
 									System.out.println("Quel cartes construisez vous ? (pour annuler choisir 0)");
 									int temp = 0;
 									do {

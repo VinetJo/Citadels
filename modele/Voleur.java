@@ -16,7 +16,6 @@ public class Voleur extends Personnage {
 		for(int i = 0; i<super.getPlateau().getNombrePersonnages();i++) {
 			System.out.println((i+1) +" - " + super.getPlateau().getPersonnage(i).getNom());			
 		}
-		
 		do {
 			System.out.println("Votre choix : ");
 			int entier = Interaction.lireUnEntier(1,(super.getPlateau().getNombrePersonnages()+1));
@@ -27,17 +26,17 @@ public class Voleur extends Personnage {
 				System.out.println("Impossible de voler un personnage rang 1");
 			}else {
 				if(super.getPlateau().getPersonnage(entier).getJoueur()!=null) {
+					int nbPiecesTemp=super.getPlateau().getPersonnage(entier).getJoueur().nbPieces();
 					super.getPlateau().getPersonnage(entier).setVole();
-					super.getJoueur().ajouterPieces(super.getPlateau().getPersonnage(entier).getJoueur().nbPieces());
-					super.getPlateau().getJoueur(entier).retirerPieces(super.getPlateau().getPersonnage(entier).getJoueur().nbPieces());
-					System.out.println("Vous avez desormais :" + super.getJoueur().nbPieces() + " dans votre trésor");
+					super.getJoueur().ajouterPieces(nbPiecesTemp);
+					super.getPlateau().getPersonnage(entier).getJoueur().retirerPieces(nbPiecesTemp);
+					System.out.println("Vous avez desormais : " + super.getJoueur().nbPieces() + " pieces dans votre trésor");
 				}else {
 					System.out.println("Aucun joueur ne possédait ce personnage");
 				}
 				continu = false;
 			}
 		}while(continu);
-		
 	}
 	
 	public void utiliserPouvoirAvatar() {
@@ -52,12 +51,12 @@ public class Voleur extends Personnage {
 				continu = false;
 				
 				if(super.getPlateau().getPersonnage(entierRan).getJoueur()!=null) {
-					
+					int nbPiecesTemp = super.getPlateau().getPersonnage(entierRan).getJoueur().nbPieces();
 					System.out.println("Vous volez : " + super.getPlateau().getPersonnage(entierRan).getNom());
 					super.getPlateau().getPersonnage(entierRan).setVole();
-					super.getJoueur().ajouterPieces(super.getPlateau().getPersonnage(entierRan).getJoueur().nbPieces());
-					super.getPlateau().getJoueur(entierRan).retirerPieces(super.getPlateau().getPersonnage(entierRan).getJoueur().nbPieces());
-					System.out.println("Vous avez desormais :" + super.getJoueur().nbPieces() + " dans votre trésor");
+					super.getJoueur().ajouterPieces(nbPiecesTemp);
+					super.getPlateau().getPersonnage(entierRan).getJoueur().retirerPieces(nbPiecesTemp);
+					System.out.println("Vous avez desormais : " + super.getJoueur().nbPieces() + " pieces dans votre trésor");
 				}else {
 					System.out.println("Aucun joueur ne possédait ce personnage");
 				}
