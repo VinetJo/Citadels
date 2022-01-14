@@ -90,8 +90,9 @@ public class Jeu {
 	private void reinitianilisationPersonnages() {
 		System.out.println("- Reinitialisation des personnages -");
 		for(int i =0 ; i<this.plateauDeJeu.getNombrePersonnages();i++) {
-			this.plateauDeJeu.getPersonnage(i).setJoueur(null);
+			this.plateauDeJeu.getPersonnage(i).reinitialiser();
 		}
+		System.out.println("Fin remise a 0");
 	}
 	
 	private boolean partieFinie() {
@@ -108,6 +109,7 @@ public class Jeu {
 	private void tourDeJeu() {
 		System.out.println("Debut du tour de jeu.");
 		choixPersonnage();
+		
 		for(int i = 0; i<this.plateauDeJeu.getNombrePersonnages(); i++) {
 			System.out.println("Le personnage " + this.plateauDeJeu.getPersonnage(i).getNom() + " est appelé" );
 			if(this.plateauDeJeu.getPersonnage(i).getJoueur()==null) {
@@ -125,14 +127,19 @@ public class Jeu {
 						percevoirRessource(i);
 						System.out.println("Recupération ressources spécifiques");
 						this.plateauDeJeu.getPersonnage(i).percevoirRessourcesSpecifiques();
+						System.out.println("Nombre pièce trésor = " + this.plateauDeJeu.getPersonnage(i).getJoueur().nbPieces());
 						System.out.println("Souhaitez vous utiliser votre pouvoir ?");
-						Scanner scan = new Scanner(System.in);
-						System.out.println(scan.nextLine());
 						boolean tempB = Interaction.lireOuiOuNon();
 						if(tempB) {
 							this.plateauDeJeu.getPersonnage(i).utiliserPouvoir();
 						}else {
-							System.out.println("Votre pouvoir n'est pas utilisé");
+							if(this.plateauDeJeu.getPersonnage(i).getNom().equals("Roi")) {
+								this.plateauDeJeu.getPersonnage(i).utiliserPouvoir();
+								System.out.println("Vous êtes obligé d'utiliser votre pouvoir en tant que Roi");
+							}else {
+								System.out.println("Votre pouvoir n'est pas utilisé");
+							}
+							
 						}
 						System.out.println("Souhaitez vous construire un nouveaux quartier ?");
 						
@@ -151,7 +158,7 @@ public class Jeu {
 									System.out.println("Quel cartes construisez vous ? (pour annuler choisir 0)");
 									int temp = 0;
 									do {
-										temp = Interaction.lireUnEntier(0, this.plateauDeJeu.getPersonnage(i).getJoueur().nbQuartiersDansMain());
+										temp = Interaction.lireUnEntier(0, (this.plateauDeJeu.getPersonnage(i).getJoueur().nbQuartiersDansMain()+1));
 										temp--;
 										if(temp==-1) {
 											System.out.println("Annulation construction");
@@ -173,7 +180,7 @@ public class Jeu {
 								System.out.println("Quel cartes construisez vous ? (pour annuler choisir 0)");
 								int temp = 0;
 								do {
-									temp = Interaction.lireUnEntier(0, this.plateauDeJeu.getPersonnage(i).getJoueur().nbQuartiersDansMain());
+									temp = Interaction.lireUnEntier(0, this.plateauDeJeu.getPersonnage(i).getJoueur().nbQuartiersDansMain()+1);
 									temp--;
 									if(temp==-1) {
 										System.out.println("Annulation construction");
@@ -201,7 +208,12 @@ public class Jeu {
 						if(tempB) {
 							this.plateauDeJeu.getPersonnage(i).utiliserPouvoirAvatar();
 						}else {
-							System.out.println("Le pouvoir n'est pas utilisé");
+							if(this.plateauDeJeu.getPersonnage(i).getNom().equals("Roi")) {
+								this.plateauDeJeu.getPersonnage(i).utiliserPouvoir();
+								System.out.println("Vous êtes obligé d'utiliser votre pouvoir en tant que Roi");
+							}else {
+								System.out.println("Le pouvoir n'est pas utilisé");
+							}
 						}
 						System.out.println("Souhaitez vous construire un nouveaux quartier ?");
 						tempB =  generateur.nextBoolean();
@@ -218,7 +230,7 @@ public class Jeu {
 									System.out.println("Quel cartes construisez vous ? (pour annuler choisir 0)");
 									int temp = 0;
 									do {
-										temp = generateur.nextInt(this.plateauDeJeu.getPersonnage(i).getJoueur().nbQuartiersDansMain());
+										temp = generateur.nextInt(this.plateauDeJeu.getPersonnage(i).getJoueur().nbQuartiersDansMain()+1);
 										temp--;
 										if(temp==-1) {
 											System.out.println("Annulation construction");
@@ -278,7 +290,6 @@ public class Jeu {
 		System.out.println("Choix des personnages : ");
 		//Mise de coté cartes
 		int temp = generateur.nextInt(listePerso.size());
-		System.out.println(temp + " aleatoire size ");
 		System.out.println("Le personnage '" + listePerso.get(temp).getNom() + "' est écarté face visible");	
 		listePerso.remove(temp);
 		for(int j=0; j<2; j++) {
@@ -288,11 +299,11 @@ public class Jeu {
 			listePerso.remove(temp2);
 			
 		}
-		/*TEST 
+		//TEST 
 		for(int p = 0; p<listePerso.size();p++) {
 			System.out.println("liste = " + listePerso.get(p).getNom());
 		}
-		*/
+		
 		for(int k = 0; k<this.plateauDeJeu.getNombreJoueurs();k++) {
 			//Si le joueur principal à la couronne
 			if(this.plateauDeJeu.getJoueur(k).getPossedeCouronne()==true && this.plateauDeJeu.getJoueur(k).equals(this.plateauDeJeu.getJoueur(0))) {
@@ -304,6 +315,7 @@ public class Jeu {
 				//do {
 					int temp3 = Interaction.lireUnEntier(1, listePerso.size()+1);
 					temp3--;
+					
 					/* idée non aboutis
 					if(!listePerso.get(temp3).equals(this.plateauDeJeu.getPersonnage(temp3))) {
 						System.out.println("Mauvaise saisie veuillez recommencer");
@@ -311,12 +323,9 @@ public class Jeu {
 					}*/
 					
 				//}while(continu);
-					System.out.println("perso choisis " + listePerso.get(temp3).getNom());
 				for(int m = 0; m<this.plateauDeJeu.getNombrePersonnages();m++) {
-					System.out.println(m + " - " + temp3);
 					System.out.println(this.plateauDeJeu.getPersonnage(m).getNom());
 					if(listePerso.get(temp3).getNom().equals(this.plateauDeJeu.getPersonnage(m).getNom())) {
-						System.out.println("test tyep " +  listePerso.size());
 						this.plateauDeJeu.getPersonnage(m).setJoueur(this.plateauDeJeu.getJoueur(0));
 						listePerso.remove(temp3);
 						break;
@@ -324,13 +333,10 @@ public class Jeu {
 				}
 				//Choix perso pour les bot
 				for(int n = 1; n<this.plateauDeJeu.getNombreJoueurs(); n++) {
-					System.out.println("size " + listePerso.size());
 					int temp4 = generateur.nextInt(listePerso.size());
 					System.out.println("Perso pour le bot " + listePerso.get(temp4).getNom());
 					for(int o = 0; o<this.plateauDeJeu.getNombrePersonnages();o++) {
-						System.out.println("numero " +o);
 						if(listePerso.get(temp4).equals(this.plateauDeJeu.getPersonnage(o))) {
-							System.out.println("test2 : " + this.plateauDeJeu.getPersonnage(o).getNom());
 							this.plateauDeJeu.getPersonnage(o).setJoueur(this.plateauDeJeu.getJoueur(n));
 							listePerso.remove(temp4);
 							break;
@@ -342,7 +348,7 @@ public class Jeu {
 				//Si un bot à la couronne
 				int temp5 = generateur.nextInt(listePerso.size());
 				for(int o = 0; o<this.plateauDeJeu.getNombrePersonnages();o++) {
-					if(listePerso.get(temp5).equals(this.plateauDeJeu.getPersonnage(o))) {
+					if(listePerso.get(temp5).getNom().equals(this.plateauDeJeu.getPersonnage(o).getNom())) {
 						this.plateauDeJeu.getPersonnage(o).setJoueur(this.plateauDeJeu.getJoueur(k));
 						listePerso.remove(temp5);
 					}
@@ -359,7 +365,7 @@ public class Jeu {
 						temp3--;
 							
 						for(int m = 0; m<this.plateauDeJeu.getNombrePersonnages();m++) {
-							if(listePerso.get(temp3).equals(this.plateauDeJeu.getPersonnage(m))) {
+							if(listePerso.get(temp3).getNom().equals(this.plateauDeJeu.getPersonnage(m).getNom())) {
 								this.plateauDeJeu.getPersonnage(m).setJoueur(this.plateauDeJeu.getJoueur(0));
 								listePerso.remove(temp3);
 							}
@@ -395,6 +401,7 @@ public class Jeu {
 			int temp = Interaction.lireUnEntier(1,3);
 			if(temp==1) {
 				this.plateauDeJeu.getPersonnage(i).getJoueur().ajouterPieces(2);
+				
 			}else if(temp==2) {
 				ArrayList<Quartier> tempListe = new ArrayList<Quartier>();
 				for(int j = 0; j<2; j++) {

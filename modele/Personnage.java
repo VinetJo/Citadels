@@ -135,7 +135,7 @@ public abstract class Personnage {
 		this.joueur = null;
 		this.assassine = false;
 		this.vole = false;
-		this.joueur.monPersonnage = null;
+		//this.joueur.monPersonnage = null;
 	}
 
 	public PlateauDeJeu getPlateau() {

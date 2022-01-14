@@ -27,14 +27,14 @@ public class Condottiere extends Personnage{
 			System.out.println("Quel joueurs choisissez-vous ? (0 pour ne rien faire)");
 			int temp2  = Interaction.lireUnEntier(0, (super.getPlateau().getNombreJoueurs()+1));
 			if(temp2==0 || super.getPlateau().getJoueur(temp2-1).getPersonnage().getNom().equals("Eveque")) {
-				System.out.println("Vous n'utilisez pas votre pouvoir");
+				System.out.println("Votre pouvoir ne peux pas choisir cette personne");
 			}else {
 				temp2--;
 				boolean boucle;
 				do {
 					boucle = false;
 					System.out.println("Quel quartier voulez vous détruire ?");
-					int temp3 = Interaction.lireUnEntier(0, super.getPlateau().getJoueur(temp2).getCite().length);
+					int temp3 = Interaction.lireUnEntier(0, super.getPlateau().getJoueur(temp2).getCite().length+1);
 					if(temp3==0) {
 						System.out.println("Pouvoir annulé");
 						break;
@@ -72,7 +72,7 @@ public class Condottiere extends Personnage{
 				boolean boucle;
 				do {
 					boucle = false;
-					int temp3 = ran.nextInt(super.getPlateau().getJoueur(temp2).getCite().length);
+					int temp3 = ran.nextInt(super.getPlateau().getJoueur(temp2).getCite().length+1);
 					if(temp3==0) {
 						break;
 					}
