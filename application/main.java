@@ -4,7 +4,6 @@
 package application;
 
 /**
- * @author "Joris"
  *
  */
 public class main {
