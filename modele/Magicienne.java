@@ -146,6 +146,7 @@ public class Magicienne extends Personnage{
 							super.getPlateau().getJoueur(temp).retirerQuartierDansMain();
 						}
 						super.getPlateau().getJoueur(temp).getMain().addAll(copieTableau);
+						System.out.println("Echange entre le joueur :" + super.getJoueur().getNom() + " et le joueur :" +super.getPlateau().getJoueur(temp).getNom());
 						continu = false;
 					}
 				}while(continu);

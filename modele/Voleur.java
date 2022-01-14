@@ -28,8 +28,9 @@ public class Voleur extends Personnage {
 			}else {
 				if(super.getPlateau().getPersonnage(entier).getJoueur()!=null) {
 					super.getPlateau().getPersonnage(entier).setVole();
-					super.getJoueur().ajouterPieces(super.getPlateau().getJoueur(entier).nbPieces());
-					super.getPlateau().getJoueur(entier).retirerPieces(super.getPlateau().getJoueur(entier).nbPieces());
+					super.getJoueur().ajouterPieces(super.getPlateau().getPersonnage(entier).getJoueur().nbPieces());
+					super.getPlateau().getJoueur(entier).retirerPieces(super.getPlateau().getPersonnage(entier).getJoueur().nbPieces());
+					System.out.println("Vous avez desormais :" + super.getJoueur().nbPieces() + " dans votre trésor");
 				}else {
 					System.out.println("Aucun joueur ne possédait ce personnage");
 				}
@@ -54,8 +55,9 @@ public class Voleur extends Personnage {
 					
 					System.out.println("Vous volez : " + super.getPlateau().getPersonnage(entierRan).getNom());
 					super.getPlateau().getPersonnage(entierRan).setVole();
-					super.getJoueur().ajouterPieces(super.getPlateau().getJoueur(entierRan).nbPieces());
-					super.getPlateau().getJoueur(entierRan).retirerPieces(super.getPlateau().getJoueur(entierRan).nbPieces());
+					super.getJoueur().ajouterPieces(super.getPlateau().getPersonnage(entierRan).getJoueur().nbPieces());
+					super.getPlateau().getJoueur(entierRan).retirerPieces(super.getPlateau().getPersonnage(entierRan).getJoueur().nbPieces());
+					System.out.println("Vous avez desormais :" + super.getJoueur().nbPieces() + " dans votre trésor");
 				}else {
 					System.out.println("Aucun joueur ne possédait ce personnage");
 				}

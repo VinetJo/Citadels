@@ -121,6 +121,7 @@ public class Joueur {
 			if(cite[compteur]==null) {
 				this.cite[compteur]= quart;
 				ajouter = true;
+				System.out.println("Ajout du quartier :" +quart.toString() +" dans la cité");
 			}
 			compteur++;
 		}while(compteur<cite.length && ajouter!=true);

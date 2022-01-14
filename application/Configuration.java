@@ -101,6 +101,7 @@ public class Configuration {
 		q = new Quartier("tripot", Quartier.TYPE_QUARTIERS[4],6,"Vous pouvez payer tout ou partie du coût de construction du Tripot en cartes de votre main, au prix de 1 carte pour 1 pièce d’or. ");
 		p.ajouter(q);
 		
+		p.melanger();
 		plat.setPioche(p);
 						
 		return plat;
