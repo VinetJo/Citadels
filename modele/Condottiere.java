@@ -42,6 +42,9 @@ public class Condottiere extends Personnage{
 					if(super.getJoueur().nbPieces()<(super.getPlateau().getJoueur(temp2).getCite()[temp3].getCout()-1)) {
 						System.out.println("Votre trésor n'est pas suffisant");
 						boucle = true;
+					}else if(super.getPlateau().getJoueur(temp2).getCite()[temp3].getNom().equals("donjon")) {
+						System.out.println("Impossible de cibler le donjon");
+						boucle = true;
 					}else {
 						super.getJoueur().retirerPieces((super.getPlateau().getJoueur(temp2).getCite()[temp3].getCout()-1));
 						
@@ -78,6 +81,9 @@ public class Condottiere extends Personnage{
 					if(super.getJoueur().nbPieces()<(super.getPlateau().getJoueur(temp2).getCite()[temp3].getCout()-1)) {
 						System.out.println("Votre trésor n'est pas suffisant");
 						boucle = true;
+					}else if(super.getPlateau().getJoueur(temp2).getCite()[temp3].getNom().equals("donjon")) {
+						System.out.println("Impossible de cibler le donjon");
+						boucle = true;
 					}else {
 						super.getJoueur().retirerPieces((super.getPlateau().getJoueur(temp2).getCite()[temp3].getCout()-1));
 						
@@ -99,14 +105,16 @@ public class Condottiere extends Personnage{
 	}
 	
 	public String percevoirRessourcesSpecifiques() {
+		int compteur=0;
 		for(int i =0; i<super.getJoueur().nbQuartiersDansCite();i++) {
 					
 					if(super.getJoueur().getCite()[i].getType().equals("MILITAIRE")) {
 						super.getJoueur().ajouterPieces(1);
+						compteur++;
 					}
 				}
 		
-		return "";
+		return "Ajout de " + compteur + " pièces dans le trésor avec les quartier militaires";
 		
 	}
 

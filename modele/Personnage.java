@@ -108,8 +108,27 @@ public abstract class Personnage {
 	
 	public void construire(Quartier quart) {
 		if(!this.getAssassine() && this.joueur!=null ) {
-			this.joueur.ajouterQuartierDansCite(quart);
+			/*
+			//Test pour savoir si le quartier est déjà dans la cité
+			boolean continu = true;
+			for(int y = 0; y<this.joueur.nbQuartiersDansCite();y++) {
+				if(this.joueur.getCite()[y].getNom().equals(quart.getNom())) {
+					System.out.println("Vous possedez déjà un quartier identique dans votre cité impossible de construire");
+					continu = false;
+				}
+			}
+			if(continu) {
+				*/
+				this.joueur.ajouterQuartierDansCite(quart);	
+				/*
+			}
+			return continu;
+			*/
+
 		}
+		//return false;
+		
+		
 	}
 	
 	public String percevoirRessourcesSpecifiques() {

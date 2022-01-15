@@ -19,12 +19,12 @@ public class Magicienne extends Personnage{
 	
 	public void utiliserPouvoir() {
 		ArrayList<Quartier> copieTableau = new ArrayList<Quartier>(super.getJoueur().getMain());
-		if(super.getJoueur().getMain().size()==0) {
+		if(super.getJoueur().nbQuartiersDansMain()==0) {
 			
 			System.out.println("IMPOSSIBLE d'utiliser votre pouvoir, vous n'avez aucune carte");
 			
 		}else {
-			
+			System.out.println("Vous avez " + super.getJoueur().nbQuartiersDansMain() + " cartes dans votre main");
 			boolean continu = false;
 			System.out.println("Voulez vous échanger vos cartes avec un autre joueur ?");
 			boolean accept = Interaction.lireOuiOuNon();
@@ -135,7 +135,7 @@ public class Magicienne extends Personnage{
 			System.out.println("IMPOSSIBLE d'utiliser votre pouvoir, vous n'avez aucune carte");
 			
 		}else {
-			
+			System.out.println("Vous avez " + super.getJoueur().nbQuartiersDansMain() + " cartes dans votre main");
 			boolean continu = false;
 			boolean accept = ran.nextBoolean();
 			if(accept) {
@@ -144,14 +144,14 @@ public class Magicienne extends Personnage{
 				do {
 					
 					int temp = ran.nextInt(super.getPlateau().getNombreJoueurs());
-					System.out.println("nom avec qui il echange" +super.getPlateau().getJoueur(temp).getNom());
+					//System.out.println("nom avec qui il echange " +super.getPlateau().getJoueur(temp).getNom());
 					if(super.getPlateau().getJoueur(temp) == super.getJoueur()) {
 						continu = true;
 						System.out.println("Vous ne pouvez pas vous choisir.");
 						
 					}else {
 						ArrayList<Quartier> copieTableau2 = new ArrayList<Quartier>(super.getPlateau().getJoueur(temp).getMain());
-						System.out.println(copieTableau.size() + " size tab bot");
+						//System.out.println(copieTableau.size() + " size tab bot");
 						for(int j = 0; j<copieTableau.size();j++) {
 							super.getJoueur().retirerQuartierDansMain();
 						}
@@ -168,7 +168,7 @@ public class Magicienne extends Personnage{
 							super.getPlateau().getJoueur(temp).ajouterQuartierDansMain(copieTableau.get(k));
 						}
 						//super.getPlateau().getJoueur(temp).getMain().addAll(copieTableau);
-						System.out.println("Echange entre le joueur :" + super.getJoueur().getNom() + " et le joueur :" +super.getPlateau().getJoueur(temp).getNom());
+						System.out.println("Echange entre : " + super.getJoueur().getNom() + " et " +super.getPlateau().getJoueur(temp).getNom());
 						continu = false;
 					}
 				}while(continu);
@@ -193,7 +193,8 @@ public class Magicienne extends Personnage{
 				}else {
 					for(int l =0; l<temp2; l++) {
 												
-						int temp3 = ran.nextInt(super.getJoueur().getMain().size());						
+						int temp3 = ran.nextInt(super.getJoueur().getMain().size());
+						//System.out.println(temp3 + " ----- ");
 						super.getPlateau().getPioche().ajouter(copieTableau.get(temp3));
 
 						copieTableau.remove(temp3);

@@ -27,18 +27,16 @@ public class Roi extends Personnage{
 	public String percevoirRessourcesSpecifiques() {
 		int compteur =0;
 		if(super.getJoueur()!=null) {
-			System.out.println(super.getJoueur().nbQuartiersDansCite());
 			for(int j=0; j<super.getJoueur().nbQuartiersDansCite(); j++) {
 				if(super.getJoueur().getCite()[j].getType().equals("NOBLE")) {
 					compteur++;
-					System.out.println("test");
 				}
 			}
 			super.getJoueur().ajouterPieces(compteur);
 		}
 		
 		
-		return "Ajout de" + compteur + " pieces dans le trésor avec les quartier nobles";
+		return "Ajout de " + compteur + " pieces dans le trésor avec les quartier nobles";
 		
 	}
 	

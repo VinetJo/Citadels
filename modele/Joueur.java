@@ -121,7 +121,7 @@ public class Joueur {
 			if(cite[compteur]==null) {
 				this.cite[compteur]= quart;
 				ajouter = true;
-				System.out.println("Ajout du quartier :" +quart.toString() +" dans la cité");
+				System.out.println("Construction du quartier => " + quart.toString());
 			}
 			compteur++;
 		}while(compteur<cite.length && ajouter!=true);
@@ -183,7 +183,6 @@ public class Joueur {
 	public Quartier retirerQuartierDansMain() {
 		Random generator = new Random();
 		int numAleatoire = generator.nextInt(this.nbQuartier);
-		System.out.println(numAleatoire + " ouaip");
 		Quartier quart = this.main.get(numAleatoire);
 		this.main.remove(numAleatoire);
 		this.nbQuartier--;
@@ -201,6 +200,7 @@ public class Joueur {
 		this.main.clear();
 		this.cite = new Quartier[8];	
 	}
+	
 	
 
 }

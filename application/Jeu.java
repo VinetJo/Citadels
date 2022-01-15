@@ -115,7 +115,7 @@ public class Jeu {
 		//TEST
 		for(int b = 0; b<this.plateauDeJeu.getNombrePersonnages(); b++) {
 			if(this.plateauDeJeu.getPersonnage(b).getJoueur()!=null) {
-				System.out.println("perso " + this.plateauDeJeu.getPersonnage(b).getNom() +" atribué a " + this.plateauDeJeu.getPersonnage(b).getJoueur().getNom());
+				System.out.println("perso " + this.plateauDeJeu.getPersonnage(b).getNom() +" attribué a " + this.plateauDeJeu.getPersonnage(b).getJoueur().getNom());
 			}
 		}
 		
@@ -135,14 +135,14 @@ public class Jeu {
 						System.out.println("Votre personnage est appelé");
 						percevoirRessource(i);
 						System.out.println("Recupération ressources spécifiques");
-						this.plateauDeJeu.getPersonnage(i).percevoirRessourcesSpecifiques();
+						System.out.println(this.plateauDeJeu.getPersonnage(i).percevoirRessourcesSpecifiques()); 
 						System.out.println("Nombre pièce trésor = " + this.plateauDeJeu.getPersonnage(i).getJoueur().nbPieces());
 						System.out.println("Souhaitez vous utiliser votre pouvoir ?");
 						//Scanner scan = new Scanner(System.in);
 						//scan.nextLine();
 						boolean tempB = Interaction.lireOuiOuNon();
 						if(tempB) {
-							System.out.println("test si rentre dans boucle");
+							//System.out.println("test si rentre dans boucle");
 							this.plateauDeJeu.getPersonnage(i).utiliserPouvoir();
 						}else {
 							if(this.plateauDeJeu.getPersonnage(i).getNom().equals("Roi")) {
@@ -154,17 +154,18 @@ public class Jeu {
 							
 						}
 						System.out.println("Souhaitez vous construire un nouveaux quartier ?");
-						
 						tempB = Interaction.lireOuiOuNon();
 						if(tempB) {
-							//System.out.println("Quel quartier voulez vous construire ?");
 							for(int j = 0; j<this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().size(); j++) {
 								System.out.println((j+1)+" - "+this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().get(j) + " "); 
-							}
+							}							
+							
+							//Si architect :
 							if(this.plateauDeJeu.getPersonnage(i).getNom().equals("Architecte")) {
 								System.out.println("Vous êtes architecte vous pouvez construire jursqu'à 3 quartiers");
 								System.out.println("Combien voulez en construire : ");
 								int temp2 = Interaction.lireUnEntier(0, 4);
+								
 								for(int k = 0; k< temp2; k++) {
 									boolean continu = false;
 									if(k>0) {
@@ -172,6 +173,7 @@ public class Jeu {
 											System.out.println((j+1)+" - "+this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().get(j) + " "); 
 										}
 									}
+									
 									System.out.println("Quel cartes construisez vous ? (pour annuler choisir 0)");
 									int temp = 0;
 									do {
@@ -182,11 +184,31 @@ public class Jeu {
 											continu = false;
 										} else if(this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().get(temp).getCout()>
 										this.plateauDeJeu.getPersonnage(i).getJoueur().nbPieces()) {
+											
 											System.out.println("Impossible vous n'avez plus assez de pièces choisir un autre quartier.");
 											continu = true;
 										}else {
 											Quartier quart =  new Quartier();
+											/*
+											boolean testQuartierIdentique = this.plateauDeJeu.getPersonnage(i).construire(this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().get(temp));
+											if(testQuartierIdentique) {
+												quart = this.plateauDeJeu.getPersonnage(i).getJoueur().retirerQuartierDansMainPrecis(temp);
+												this.plateauDeJeu.getPersonnage(i).getJoueur().retirerPieces(quart.getCout());
+												continu = false;
+											}else {
+												System.out.println("Entrez une nouvelle valeur :");
+												continu = true;
+											}
+											*/
 											quart = this.plateauDeJeu.getPersonnage(i).getJoueur().retirerQuartierDansMainPrecis(temp);
+											
+											//Si manufacture dans la cité alors coût du quartier -1
+											if(this.plateauDeJeu.getPersonnage(i).getJoueur().quartierPresentDansCite("manufacture")) {
+												if(quart.getType().equals("MERVEILLE")) {
+													this.plateauDeJeu.getPersonnage(i).getJoueur().ajouterPieces(1);
+												}
+												
+											}												
 											this.plateauDeJeu.getPersonnage(i).construire(quart);
 											this.plateauDeJeu.getPersonnage(i).getJoueur().retirerPieces(quart.getCout());
 											continu = false;
@@ -208,19 +230,47 @@ public class Jeu {
 										System.out.println("Impossible vous n'avez plus assez de pièces choisir un autre quartier.");
 										continu = true;
 									}else {
+										
 										Quartier quart =  new Quartier();
+										/*
+										boolean testQuartierIdentique = this.plateauDeJeu.getPersonnage(i).construire(this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().get(temp));
+										if(testQuartierIdentique) {
+											quart = this.plateauDeJeu.getPersonnage(i).getJoueur().retirerQuartierDansMainPrecis(temp);
+											this.plateauDeJeu.getPersonnage(i).getJoueur().retirerPieces(quart.getCout());
+											continu = false;
+										}else {
+											System.out.println("Entrez une nouvelle valeur :");
+											continu = true;
+										}
+										*/		
+												
 										quart = this.plateauDeJeu.getPersonnage(i).getJoueur().retirerQuartierDansMainPrecis(temp);
+										
+										//Si manufacture dans la cité alors coût du quartier merveille  -1
+										if(this.plateauDeJeu.getPersonnage(i).getJoueur().quartierPresentDansCite("manufacture")) {
+											if(quart.getType().equals("MERVEILLE")) {
+												this.plateauDeJeu.getPersonnage(i).getJoueur().ajouterPieces(1);
+											}
+											
+										}												
 										this.plateauDeJeu.getPersonnage(i).construire(quart);
 										this.plateauDeJeu.getPersonnage(i).getJoueur().retirerPieces(quart.getCout());
 										continu = false;
+										
 									}
 								}while(continu);						
 							}
 						}
+						//Affiche cité
+						System.out.println("Votre cité actuelle :");
+						for(int y = 0; y<this.plateauDeJeu.getJoueur(0).nbQuartiersDansCite();y++) {
+							System.out.println(y+1 +" - " +this.plateauDeJeu.getJoueur(0).getCite()[y].getNom());
+						}
+						
 						//Bot appelé
 					}else {
 						percevoirRessource(i);
-						this.plateauDeJeu.getPersonnage(i).percevoirRessourcesSpecifiques();
+						System.out.println(this.plateauDeJeu.getPersonnage(i).percevoirRessourcesSpecifiques());
 						System.out.println("Souhaitez vous utiliser votre pouvoir ?");
 						boolean tempB = generateur.nextBoolean();
 						System.out.println(tempB);
@@ -260,9 +310,26 @@ public class Jeu {
 											continu = true;
 										}else {
 											Quartier quart =  new Quartier();
-											quart = this.plateauDeJeu.getPersonnage(i).getJoueur().retirerQuartierDansMain();
+											/*
+											boolean testQuartierIdentique = this.plateauDeJeu.getPersonnage(i).construire(this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().get(temp));
+											if(testQuartierIdentique) {
+												quart = this.plateauDeJeu.getPersonnage(i).getJoueur().retirerQuartierDansMainPrecis(temp);
+												this.plateauDeJeu.getPersonnage(i).getJoueur().retirerPieces(quart.getCout());
+												continu = false;
+											}else {
+												continu = true;
+											}
+											*/
+											quart = this.plateauDeJeu.getPersonnage(i).getJoueur().retirerQuartierDansMainPrecis(temp);
+											//Si manufacture dans la cité alors coût du quartier merveille -1
+											if(this.plateauDeJeu.getPersonnage(i).getJoueur().quartierPresentDansCite("manufacture")) {
+												if(quart.getType().equals("MERVEILLE")) {
+													this.plateauDeJeu.getPersonnage(i).getJoueur().ajouterPieces(1);
+												}
+												
+											}												
 											this.plateauDeJeu.getPersonnage(i).construire(quart);
-											System.out.println(quart.getNom());
+											this.plateauDeJeu.getPersonnage(i).getJoueur().retirerPieces(quart.getCout());
 											continu = false;
 										}
 									}while(continu);
@@ -282,10 +349,28 @@ public class Jeu {
 										System.out.println("Impossible le nombre de pieces est insufisant.");
 										continu = true;
 									}else {
+										
 										Quartier quart =  new Quartier();
-										quart = this.plateauDeJeu.getPersonnage(i).getJoueur().retirerQuartierDansMain();
+										/*
+										boolean testQuartierIdentique = this.plateauDeJeu.getPersonnage(i).construire(this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().get(temp));
+										if(testQuartierIdentique) {
+											quart = this.plateauDeJeu.getPersonnage(i).getJoueur().retirerQuartierDansMainPrecis(temp);
+											this.plateauDeJeu.getPersonnage(i).getJoueur().retirerPieces(quart.getCout());
+											continu = false;
+										}else {
+											continu = true;
+										}
+										*/
+										quart = this.plateauDeJeu.getPersonnage(i).getJoueur().retirerQuartierDansMainPrecis(temp);
+										//Si manufacture dans la cité alors coût du quartier merveille -1
+										if(this.plateauDeJeu.getPersonnage(i).getJoueur().quartierPresentDansCite("manufacture")) {
+											if(quart.getType().equals("MERVEILLE")) {
+												this.plateauDeJeu.getPersonnage(i).getJoueur().ajouterPieces(1);
+											}
+											
+										}												
 										this.plateauDeJeu.getPersonnage(i).construire(quart);
-										System.out.println(quart.getNom());
+										this.plateauDeJeu.getPersonnage(i).getJoueur().retirerPieces(quart.getCout());
 										continu = false;
 									}
 								}while(continu);						
@@ -317,16 +402,10 @@ public class Jeu {
 		for(int j=0; j<2; j++) {
 			System.out.println("Un personnage est écarté face caché");	
 			int temp2 = generateur.nextInt(listePerso.size());
-			System.out.println("perso écarté caché : " + listePerso.get(temp2).getNom());
+			//Plus clair pdt test System.out.println("perso écarté caché : " + listePerso.get(temp2).getNom());
 			listePerso.remove(temp2);
 			
 		}
-		//TEST 
-		/*
-		for(int p = 0; p<listePerso.size();p++) {
-			System.out.println("liste = " + listePerso.get(p).getNom());
-		}
-		*/
 		for(int k = 0; k<this.plateauDeJeu.getNombreJoueurs();k++) {
 			//Si le joueur principal à la couronne
 			if(this.plateauDeJeu.getJoueur(k).getPossedeCouronne()==true && this.plateauDeJeu.getJoueur(k).equals(this.plateauDeJeu.getJoueur(0))) {
@@ -339,7 +418,7 @@ public class Jeu {
 					int temp3 = Interaction.lireUnEntier(1, listePerso.size()+1);
 					temp3--;
 					
-					/* idée non aboutis
+					/* idée non aboutie
 					if(!listePerso.get(temp3).equals(this.plateauDeJeu.getPersonnage(temp3))) {
 						System.out.println("Mauvaise saisie veuillez recommencer");
 						continu = true;
@@ -347,7 +426,7 @@ public class Jeu {
 					
 				//}while(continu);
 				for(int m = 0; m<this.plateauDeJeu.getNombrePersonnages();m++) {
-					System.out.println(this.plateauDeJeu.getPersonnage(m).getNom());
+					//System.out.println(this.plateauDeJeu.getPersonnage(m).getNom());
 					if(listePerso.get(temp3).getNom().equals(this.plateauDeJeu.getPersonnage(m).getNom())) {
 						this.plateauDeJeu.getPersonnage(m).setJoueur(this.plateauDeJeu.getJoueur(0));
 						listePerso.remove(temp3);
@@ -357,7 +436,6 @@ public class Jeu {
 				//Choix perso pour les bot
 				for(int n = 1; n<this.plateauDeJeu.getNombreJoueurs(); n++) {
 					int temp4 = generateur.nextInt(listePerso.size());
-					System.out.println("Perso pour le bot " + listePerso.get(temp4).getNom());
 					for(int o = 0; o<this.plateauDeJeu.getNombrePersonnages();o++) {
 						if(listePerso.get(temp4).equals(this.plateauDeJeu.getPersonnage(o))) {
 							this.plateauDeJeu.getPersonnage(o).setJoueur(this.plateauDeJeu.getJoueur(n));
@@ -370,9 +448,6 @@ public class Jeu {
 			}else if(this.plateauDeJeu.getJoueur(k).getPossedeCouronne()==true) {
 				//Si un bot à la couronne
 				int temp5 = generateur.nextInt(listePerso.size());
-				System.out.println("test erreur incompréhensible " + temp5 + " -- " + k);
-				System.out.println("Perso pour le bot " + listePerso.get(temp5).getNom());
-				System.out.println(" nom : " + this.plateauDeJeu.getJoueur(k).getNom());
 				for(int o = 0; o<this.plateauDeJeu.getNombrePersonnages();o++) {
 					if(listePerso.get(temp5).getNom().equals(this.plateauDeJeu.getPersonnage(o).getNom())) {
 						this.plateauDeJeu.getPersonnage(o).setJoueur(this.plateauDeJeu.getJoueur(k));
@@ -401,10 +476,7 @@ public class Jeu {
 					
 					}else if(n!=k){
 						int temp4 = generateur.nextInt(listePerso.size());
-						//System.out.println("Perso pour le bot " + listePerso.get(temp4).getNom() + " nom : " + this.plateauDeJeu.getJoueur(n).getNom());
-						System.out.println("size pefros : " + this.plateauDeJeu.getNombrePersonnages());
 						for(int o = 0; o<this.plateauDeJeu.getNombrePersonnages();o++) {
-							//System.out.println("test du for" + temp4 + " - " + o);
 							if(listePerso.get(temp4).equals(this.plateauDeJeu.getPersonnage(o))) {
 								this.plateauDeJeu.getPersonnage(o).setJoueur(this.plateauDeJeu.getJoueur(n));
 								listePerso.remove(temp4);
@@ -495,6 +567,30 @@ public class Jeu {
 			int qMilitaire =0;
 			int qMerveille =0;
 			System.out.println("Calcul points pour le joueur " + this.plateauDeJeu.getJoueur(i).getNom());
+			
+			//Merveille cours des miracles
+			if(this.plateauDeJeu.getJoueur(i).quartierPresentDansCite("cour des miracles")
+					&& this.plateauDeJeu.getJoueur(i).equals(this.plateauDeJeu.getJoueur(0)) ) {
+				System.out.println("Vous devez choisir de quel type est la cours des miracles (RELIGIEUX, MILITAIRE, NOBLE, COMMERCANT, MERVEILLE)");
+				String txt = Interaction.lireUneChaine();
+				txt = txt.toUpperCase();
+				for(int j = 0; j<this.plateauDeJeu.getJoueur(i).nbQuartiersDansCite(); j++ ) {
+					if(this.plateauDeJeu.getJoueur(i).getCite()[j].getNom().equals("cour des miracles")) {
+						this.plateauDeJeu.getJoueur(i).getCite()[j].setType(txt);
+					}
+					
+				}
+				
+			}else if(this.plateauDeJeu.getJoueur(i).quartierPresentDansCite("cour des miracles")) {
+				//Par défaut attribution type religieux pour le bot
+				for(int j = 0; j<this.plateauDeJeu.getJoueur(i).nbQuartiersDansCite(); j++ ) {
+					if(this.plateauDeJeu.getJoueur(i).getCite()[j].getNom().equals("cour des miracles")) {
+						this.plateauDeJeu.getJoueur(i).getCite()[j].setType("RELIGIEUX");
+					}
+					
+				}
+			}
+			
 			//cout construction cite = pts
 			for(int j = 0; j<this.plateauDeJeu.getJoueur(i).nbQuartiersDansCite(); j++ ) {
 				if(!this.plateauDeJeu.getJoueur(i).getCite()[j].equals(null)) {
@@ -509,7 +605,10 @@ public class Jeu {
 						qMilitaire++;
 					}else if(this.plateauDeJeu.getJoueur(i).getCite()[j].getType().equals("MERVEILLE")) {
 						qMerveille++;
+						calculPointsMerveille(this.plateauDeJeu.getJoueur(i).getCite()[j], i);
 					}
+					
+					
 				}
 			}
 			//Si tout type de quartier
@@ -535,6 +634,47 @@ public class Jeu {
 		
 		System.out.println("Et le gagnant est " + this.plateauDeJeu.getJoueur(numJoueur).getNom());
 		
+	}
+	
+	private int calculPointsMerveille(Quartier quart, int numJoueur) {
+		int points = 0;
+		switch(quart.getNom()) {
+		
+		case "dracoport":
+			points +=2;
+			break;
+		
+		case "fontaine aux souhaits":
+			for(int k =0; k<this.plateauDeJeu.getJoueur(numJoueur).nbQuartiersDansCite();k++) {
+				if(this.plateauDeJeu.getJoueur(numJoueur).getCite()[k].getType().equals("MERVEILLE")) {
+					points+=1;
+				}
+				
+			}
+			System.out.println("Fontaine aux souhaits + " + points + " points");
+			break;
+		
+		case "salle des cartes":
+			points+= this.plateauDeJeu.getJoueur(numJoueur).nbQuartiersDansMain();
+			System.out.println("Salle des cartes + " + points + " points");
+			break;
+		
+		case "statue équestre":
+			if(this.plateauDeJeu.getJoueur(numJoueur).getPossedeCouronne()) {
+				System.out.println("Couronne + statue équestre = 5 points supplémentaire");
+				points+=5;
+			}
+			break;
+			
+		case "trésor impérial" :
+			points += this.plateauDeJeu.getJoueur(numJoueur).nbPieces();
+			System.out.println("Trésor impérial + " + points + " points");
+			break;
+		
+		}
+		
+		
+		return points;
 	}
 	
 
