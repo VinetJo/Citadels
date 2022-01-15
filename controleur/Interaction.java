@@ -29,7 +29,7 @@ public class Interaction {
 		do {
 			try {
 				i = sc.nextInt();
-				
+				//System.out.println(i + "dans interaction entier");
 				if (i>=borneMin && i<borneMax) {
 					continu = false;
 				}else {
@@ -50,9 +50,10 @@ public class Interaction {
 		boolean retour = true;
 		String chaine="";
 		boolean continu = true;
+				
 		do {
+				sc.nextLine();
 				chaine = sc.nextLine();
-				System.out.println(chaine+ "test dans interaction.class");
 				if(chaine.toLowerCase().equals("oui")||chaine.toLowerCase().equals("o")) {
 					retour = true;
 					continu = false;

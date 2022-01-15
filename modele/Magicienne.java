@@ -154,12 +154,19 @@ public class Magicienne extends Personnage{
 						for(int j = 0; j<copieTableau.size();j++) {
 							super.getJoueur().retirerQuartierDansMain();
 						}
-						super.getJoueur().getMain().addAll(copieTableau2);
+						
+						for(int k = 0; k<copieTableau2.size();k++) {
+							super.getJoueur().ajouterQuartierDansMain(copieTableau2.get(k));
+						}
+						//super.getJoueur().getMain().addAll(copieTableau2);
 						
 						for(int j = 0; j<copieTableau2.size();j++) {
 							super.getPlateau().getJoueur(temp).retirerQuartierDansMain();
 						}
-						super.getPlateau().getJoueur(temp).getMain().addAll(copieTableau);
+						for(int k = 0; k<copieTableau.size();k++) {
+							super.getPlateau().getJoueur(temp).ajouterQuartierDansMain(copieTableau.get(k));
+						}
+						//super.getPlateau().getJoueur(temp).getMain().addAll(copieTableau);
 						System.out.println("Echange entre le joueur :" + super.getJoueur().getNom() + " et le joueur :" +super.getPlateau().getJoueur(temp).getNom());
 						continu = false;
 					}
@@ -170,7 +177,7 @@ public class Magicienne extends Personnage{
 				//échange avec la pioche
 				
 				int temp2 = ran.nextInt((super.getJoueur().getMain().size()+1));
-				
+				System.out.println("Nbr cartes échangés" + temp2);
 				if(temp2==0) {
 					System.out.println("Aucune action effectué fin du pouvoir.");
 					
@@ -185,7 +192,7 @@ public class Magicienne extends Personnage{
 				}else {
 					for(int l =0; l<temp2; l++) {
 												
-						int temp3 = ran.nextInt((super.getJoueur().getMain().size()));
+						int temp3 = ran.nextInt(super.getJoueur().getMain().size());
 						temp3--;
 						super.getPlateau().getPioche().ajouter(copieTableau.get(temp3));
 
@@ -201,7 +208,10 @@ public class Magicienne extends Personnage{
 						super.getJoueur().retirerQuartierDansMain();
 						
 					}
-					super.getJoueur().getMain().addAll(copieTableau);
+					for(int k = 0; k<copieTableau.size();k++) {
+						super.getJoueur().ajouterQuartierDansMain(copieTableau.get(k));
+					}
+					//super.getJoueur().getMain().addAll(copieTableau);
 					
 				}
 				

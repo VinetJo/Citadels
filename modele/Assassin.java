@@ -50,7 +50,7 @@ public class Assassin extends Personnage{
 					System.out.println("Vous assassinez : " + super.getPlateau().getPersonnage(entierRan).getNom());
 					super.getPlateau().getPersonnage(entierRan).setAssassine();
 				}else {
-					System.out.println("Aucun joueur ne possédait ce personnage");
+					System.out.println("Aucun joueur ne possédait le personnage " + super.getPlateau().getPersonnage(entierRan).getNom());
 				}
 				
 				continu = false;

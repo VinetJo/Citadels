@@ -136,6 +136,8 @@ public class Jeu {
 						this.plateauDeJeu.getPersonnage(i).percevoirRessourcesSpecifiques();
 						System.out.println("Nombre pièce trésor = " + this.plateauDeJeu.getPersonnage(i).getJoueur().nbPieces());
 						System.out.println("Souhaitez vous utiliser votre pouvoir ?");
+						//Scanner scan = new Scanner(System.in);
+						//scan.nextLine();
 						boolean tempB = Interaction.lireOuiOuNon();
 						if(tempB) {
 							System.out.println("test si rentre dans boucle");
@@ -315,10 +317,11 @@ public class Jeu {
 			
 		}
 		//TEST 
+		/*
 		for(int p = 0; p<listePerso.size();p++) {
 			System.out.println("liste = " + listePerso.get(p).getNom());
 		}
-		
+		*/
 		for(int k = 0; k<this.plateauDeJeu.getNombreJoueurs();k++) {
 			//Si le joueur principal à la couronne
 			if(this.plateauDeJeu.getJoueur(k).getPossedeCouronne()==true && this.plateauDeJeu.getJoueur(k).equals(this.plateauDeJeu.getJoueur(0))) {
@@ -396,7 +399,7 @@ public class Jeu {
 						//System.out.println("Perso pour le bot " + listePerso.get(temp4).getNom() + " nom : " + this.plateauDeJeu.getJoueur(n).getNom());
 						System.out.println("size pefros : " + this.plateauDeJeu.getNombrePersonnages());
 						for(int o = 0; o<this.plateauDeJeu.getNombrePersonnages();o++) {
-							System.out.println("test du for" + temp4 + " - " + o);
+							//System.out.println("test du for" + temp4 + " - " + o);
 							if(listePerso.get(temp4).equals(this.plateauDeJeu.getPersonnage(o))) {
 								this.plateauDeJeu.getPersonnage(o).setJoueur(this.plateauDeJeu.getJoueur(n));
 								listePerso.remove(temp4);
