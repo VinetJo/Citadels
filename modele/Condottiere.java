@@ -12,9 +12,6 @@ public class Condottiere extends Personnage{
 	}
 	
 	public void utiliserPouvoir() {
-		System.out.println("Voulez vous utiliser votre pouvoir de destruction ?");
-		boolean temp = Interaction.lireOuiOuNon();
-		if(temp) {
 			for(int i =0 ; i< super.getPlateau().getNombreJoueurs() ; i++) {
 				System.out.println((i+1) + " - " + super.getPlateau().getJoueur(i).getNom()+ ": ");
 				for(int j = 0; j<super.getPlateau().getJoueur(i).nbQuartiersDansCite(); j++) {
@@ -62,13 +59,11 @@ public class Condottiere extends Personnage{
 			}
 			
 			
-		}
+		
 	}
 	
 	public void utiliserPouvoirAvatar() {
 		Random ran = new Random();
-		boolean temp = ran.nextBoolean();
-		if(temp) {
 			int temp2  = ran.nextInt(super.getPlateau().getNombreJoueurs());
 			if(!super.getPlateau().getJoueur(temp2).getPersonnage().getNom().equals("Eveque") 
 					&& super.getPlateau().getJoueur(temp2).nbQuartiersDansCite()>0) {
@@ -100,7 +95,7 @@ public class Condottiere extends Personnage{
 			}
 			
 			
-		}
+		
 	}
 	
 	public String percevoirRessourcesSpecifiques() {

@@ -52,6 +52,7 @@ public class Jeu {
 			reinitianilisationPersonnages();			
 		}while(!partieFinie());
 		calculDesPoints();
+		System.out.println("LA PARTIE EST TERMINE");
 	}
 	
 	private void initialisation() {
@@ -184,7 +185,7 @@ public class Jeu {
 											continu = true;
 										}else {
 											Quartier quart =  new Quartier();
-											quart = this.plateauDeJeu.getPersonnage(i).getJoueur().retirerQuartierDansMain();
+											quart = this.plateauDeJeu.getPersonnage(i).getJoueur().retirerQuartierDansMainPrecis(temp);
 											this.plateauDeJeu.getPersonnage(i).construire(quart);
 											this.plateauDeJeu.getPersonnage(i).getJoueur().retirerPieces(quart.getCout());
 											continu = false;
@@ -207,7 +208,7 @@ public class Jeu {
 										continu = true;
 									}else {
 										Quartier quart =  new Quartier();
-										quart = this.plateauDeJeu.getPersonnage(i).getJoueur().retirerQuartierDansMain();
+										quart = this.plateauDeJeu.getPersonnage(i).getJoueur().retirerQuartierDansMainPrecis(temp);
 										this.plateauDeJeu.getPersonnage(i).construire(quart);
 										this.plateauDeJeu.getPersonnage(i).getJoueur().retirerPieces(quart.getCout());
 										continu = false;
@@ -483,6 +484,8 @@ public class Jeu {
 	
 	private void calculDesPoints() {
 		boolean prems = false;
+		int resultat=0;
+		int numJoueur=0;
 		for(int i =0; i<this.plateauDeJeu.getNombreJoueurs(); i++) {
 			int nbrPoints = 0;
 			int qNoble =0;
@@ -522,9 +525,15 @@ public class Jeu {
 			//Ajout spé merveille
 			
 			System.out.println("Le joueur "+ this.plateauDeJeu.getJoueur(i).getNom()+ " possède " + nbrPoints + " de points");
-			
+			if(nbrPoints > resultat) {
+				resultat = nbrPoints;
+				numJoueur = i;
+			}
 			
 		}
+		
+		System.out.println("Et le gagnant est " + this.plateauDeJeu.getJoueur(numJoueur).getNom());
+		
 	}
 	
 
