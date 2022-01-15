@@ -12,9 +12,6 @@ public class Condottiere extends Personnage{
 	}
 	
 	public void utiliserPouvoir() {
-		System.out.println("Voulez vous utiliser votre pouvoir de destruction ?");
-		boolean temp = Interaction.lireOuiOuNon();
-		if(temp) {
 			for(int i =0 ; i< super.getPlateau().getNombreJoueurs() ; i++) {
 				System.out.println((i+1) + " - " + super.getPlateau().getJoueur(i).getNom()+ ": ");
 				for(int j = 0; j<super.getPlateau().getJoueur(i).nbQuartiersDansCite(); j++) {
@@ -26,15 +23,17 @@ public class Condottiere extends Personnage{
 			System.out.println("Pour information vous avez : " + super.getJoueur().nbPieces() + " pieces dans votre trésor");
 			System.out.println("Quel joueurs choisissez-vous ? (0 pour ne rien faire)");
 			int temp2  = Interaction.lireUnEntier(0, (super.getPlateau().getNombreJoueurs()+1));
-			if(temp2==0 || super.getPlateau().getJoueur(temp2-1).getPersonnage().getNom().equals("Eveque")) {
-				System.out.println("Vous n'utilisez pas votre pouvoir");
+			if(temp2==0) {
+				System.out.println("Pouvoir annulé");
+			}else if(super.getPlateau().getJoueur(temp2-1).getPersonnage().getNom().equals("Eveque")){
+				System.out.println("Votre pouvoir ne peux pas choisir cette personne");
 			}else {
 				temp2--;
 				boolean boucle;
 				do {
 					boucle = false;
 					System.out.println("Quel quartier voulez vous détruire ?");
-					int temp3 = Interaction.lireUnEntier(0, super.getPlateau().getJoueur(temp2).getCite().length);
+					int temp3 = Interaction.lireUnEntier(0, super.getPlateau().getJoueur(temp2).getCite().length+1);
 					if(temp3==0) {
 						System.out.println("Pouvoir annulé");
 						break;
@@ -60,19 +59,18 @@ public class Condottiere extends Personnage{
 			}
 			
 			
-		}
+		
 	}
 	
 	public void utiliserPouvoirAvatar() {
 		Random ran = new Random();
-		boolean temp = ran.nextBoolean();
-		if(temp) {
 			int temp2  = ran.nextInt(super.getPlateau().getNombreJoueurs());
-			if(temp2!=0 && !super.getPlateau().getJoueur(temp2).getPersonnage().getNom().equals("Eveque")) {
+			if(!super.getPlateau().getJoueur(temp2).getPersonnage().getNom().equals("Eveque") 
+					&& super.getPlateau().getJoueur(temp2).nbQuartiersDansCite()>0) {
 				boolean boucle;
 				do {
 					boucle = false;
-					int temp3 = ran.nextInt(super.getPlateau().getJoueur(temp2).getCite().length);
+					int temp3 = ran.nextInt(super.getPlateau().getJoueur(temp2).nbQuartiersDansCite()+1);
 					if(temp3==0) {
 						break;
 					}
@@ -97,7 +95,7 @@ public class Condottiere extends Personnage{
 			}
 			
 			
-		}
+		
 	}
 	
 	public String percevoirRessourcesSpecifiques() {

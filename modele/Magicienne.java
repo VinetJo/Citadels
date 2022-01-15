@@ -47,12 +47,18 @@ public class Magicienne extends Personnage{
 						for(int j = 0; j<copieTableau.size();j++) {
 							super.getJoueur().retirerQuartierDansMain();
 						}
-						super.getJoueur().getMain().addAll(copieTableau2);
+						for(int k = 0; k<copieTableau2.size();k++) {
+							super.getJoueur().ajouterQuartierDansMain(copieTableau2.get(k));
+						}
+						//super.getJoueur().getMain().addAll(copieTableau2);
 						
 						for(int j = 0; j<copieTableau2.size();j++) {
 							super.getPlateau().getJoueur(temp).retirerQuartierDansMain();
 						}
-						super.getPlateau().getJoueur(temp).getMain().addAll(copieTableau);
+						for(int k = 0; k<copieTableau.size();k++) {
+							super.getPlateau().getJoueur(temp).ajouterQuartierDansMain(copieTableau.get(k));
+						}
+						//super.getPlateau().getJoueur(temp).getMain().addAll(copieTableau);
 						continu = false;
 					}
 				}while(continu);
@@ -98,13 +104,21 @@ public class Magicienne extends Personnage{
 						super.getJoueur().retirerQuartierDansMain();
 						
 					}
-					super.getJoueur().getMain().addAll(copieTableau);
+					for(int k = 0; k<copieTableau.size();k++) {
+						super.getJoueur().ajouterQuartierDansMain(copieTableau.get(k));
+					}
+					//super.getJoueur().getMain().addAll(copieTableau);
 					
 				}
 				
 				
 				
 			}
+			System.out.println("Voici vos cartes :");
+			for(int i = 0; i<super.getJoueur().nbQuartiersDansMain(); i++) {
+				System.out.println(i+1 + "-" + super.getJoueur().getMain().get(i).getNom());
+			}
+			
 			
 		}
 		
@@ -116,7 +130,7 @@ public class Magicienne extends Personnage{
 	public void utiliserPouvoirAvatar() {
 		Random ran = new Random();
 		ArrayList<Quartier> copieTableau = new ArrayList<Quartier>(super.getJoueur().getMain());
-		if(super.getJoueur().getMain().size()==0) {
+		if(super.getJoueur().nbQuartiersDansMain()==0) {
 			
 			System.out.println("IMPOSSIBLE d'utiliser votre pouvoir, vous n'avez aucune carte");
 			
@@ -130,22 +144,31 @@ public class Magicienne extends Personnage{
 				do {
 					
 					int temp = ran.nextInt(super.getPlateau().getNombreJoueurs());
-					
+					System.out.println("nom avec qui il echange" +super.getPlateau().getJoueur(temp).getNom());
 					if(super.getPlateau().getJoueur(temp) == super.getJoueur()) {
 						continu = true;
 						System.out.println("Vous ne pouvez pas vous choisir.");
 						
 					}else {
 						ArrayList<Quartier> copieTableau2 = new ArrayList<Quartier>(super.getPlateau().getJoueur(temp).getMain());
+						System.out.println(copieTableau.size() + " size tab bot");
 						for(int j = 0; j<copieTableau.size();j++) {
 							super.getJoueur().retirerQuartierDansMain();
 						}
-						super.getJoueur().getMain().addAll(copieTableau2);
+						
+						for(int k = 0; k<copieTableau2.size();k++) {
+							super.getJoueur().ajouterQuartierDansMain(copieTableau2.get(k));
+						}
+						//super.getJoueur().getMain().addAll(copieTableau2);
 						
 						for(int j = 0; j<copieTableau2.size();j++) {
 							super.getPlateau().getJoueur(temp).retirerQuartierDansMain();
 						}
-						super.getPlateau().getJoueur(temp).getMain().addAll(copieTableau);
+						for(int k = 0; k<copieTableau.size();k++) {
+							super.getPlateau().getJoueur(temp).ajouterQuartierDansMain(copieTableau.get(k));
+						}
+						//super.getPlateau().getJoueur(temp).getMain().addAll(copieTableau);
+						System.out.println("Echange entre le joueur :" + super.getJoueur().getNom() + " et le joueur :" +super.getPlateau().getJoueur(temp).getNom());
 						continu = false;
 					}
 				}while(continu);
@@ -155,7 +178,7 @@ public class Magicienne extends Personnage{
 				//échange avec la pioche
 				
 				int temp2 = ran.nextInt((super.getJoueur().getMain().size()+1));
-				
+				System.out.println("Nbr cartes échangés" + temp2);
 				if(temp2==0) {
 					System.out.println("Aucune action effectué fin du pouvoir.");
 					
@@ -170,8 +193,7 @@ public class Magicienne extends Personnage{
 				}else {
 					for(int l =0; l<temp2; l++) {
 												
-						int temp3 = ran.nextInt((super.getJoueur().getMain().size()));
-						temp3--;
+						int temp3 = ran.nextInt(super.getJoueur().getMain().size());						
 						super.getPlateau().getPioche().ajouter(copieTableau.get(temp3));
 
 						copieTableau.remove(temp3);
@@ -186,7 +208,10 @@ public class Magicienne extends Personnage{
 						super.getJoueur().retirerQuartierDansMain();
 						
 					}
-					super.getJoueur().getMain().addAll(copieTableau);
+					for(int k = 0; k<copieTableau.size();k++) {
+						super.getJoueur().ajouterQuartierDansMain(copieTableau.get(k));
+					}
+					//super.getJoueur().getMain().addAll(copieTableau);
 					
 				}
 				

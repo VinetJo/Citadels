@@ -64,11 +64,11 @@ public class Configuration {
 		//Ajout Joueurs
 		Joueur joueur = new Joueur("Vous");
 		plat.ajouterJoueur(joueur);
-		joueur = new Joueur("jérrarre");
+		joueur = new Joueur("Gégé");
 		plat.ajouterJoueur(joueur);
-		joueur = new Joueur("fraideau");
+		joueur = new Joueur("Fred");
 		plat.ajouterJoueur(joueur);
-		joueur = new Joueur("Seib");
+		joueur = new Joueur("Seb");
 		plat.ajouterJoueur(joueur);		
 		
 		//Ajout Merveilles
@@ -100,6 +100,9 @@ public class Configuration {
 		p.ajouter(q);
 		q = new Quartier("tripot", Quartier.TYPE_QUARTIERS[4],6,"Vous pouvez payer tout ou partie du coût de construction du Tripot en cartes de votre main, au prix de 1 carte pour 1 pièce d’or. ");
 		p.ajouter(q);
+		
+		p.melanger();
+		plat.setPioche(p);
 						
 		return plat;
 		
