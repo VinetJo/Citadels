@@ -130,7 +130,7 @@ public class Magicienne extends Personnage{
 	public void utiliserPouvoirAvatar() {
 		Random ran = new Random();
 		ArrayList<Quartier> copieTableau = new ArrayList<Quartier>(super.getJoueur().getMain());
-		if(super.getJoueur().getMain().size()==0) {
+		if(super.getJoueur().nbQuartiersDansMain()==0) {
 			
 			System.out.println("IMPOSSIBLE d'utiliser votre pouvoir, vous n'avez aucune carte");
 			
@@ -144,13 +144,14 @@ public class Magicienne extends Personnage{
 				do {
 					
 					int temp = ran.nextInt(super.getPlateau().getNombreJoueurs());
-					
+					System.out.println("nom avec qui il echange" +super.getPlateau().getJoueur(temp).getNom());
 					if(super.getPlateau().getJoueur(temp) == super.getJoueur()) {
 						continu = true;
 						System.out.println("Vous ne pouvez pas vous choisir.");
 						
 					}else {
 						ArrayList<Quartier> copieTableau2 = new ArrayList<Quartier>(super.getPlateau().getJoueur(temp).getMain());
+						System.out.println(copieTableau.size() + " size tab bot");
 						for(int j = 0; j<copieTableau.size();j++) {
 							super.getJoueur().retirerQuartierDansMain();
 						}

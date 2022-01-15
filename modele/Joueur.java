@@ -182,7 +182,8 @@ public class Joueur {
 	
 	public Quartier retirerQuartierDansMain() {
 		Random generator = new Random();
-		int numAleatoire = generator.nextInt(this.nbQuartier+1);
+		int numAleatoire = generator.nextInt(this.nbQuartier);
+		System.out.println(numAleatoire);
 		Quartier quart = this.main.get(numAleatoire);
 		this.main.remove(numAleatoire);
 		this.nbQuartier--;

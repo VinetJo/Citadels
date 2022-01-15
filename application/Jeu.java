@@ -92,7 +92,7 @@ public class Jeu {
 		for(int i =0 ; i<this.plateauDeJeu.getNombrePersonnages();i++) {
 			this.plateauDeJeu.getPersonnage(i).reinitialiser();
 		}
-		System.out.println("Fin remise a 0");
+		//System.out.println("Fin remise a 0");
 	}
 	
 	private boolean partieFinie() {
@@ -296,6 +296,9 @@ public class Jeu {
 			
 			System.out.println("Fin tour du " + this.plateauDeJeu.getPersonnage(i).getNom());
 		}
+		for(int m = 0; m<this.plateauDeJeu.getNombreJoueurs(); m++) {
+			System.out.println(this.plateauDeJeu.getJoueur(m).getNom() +" Pieces = " + this.plateauDeJeu.getJoueur(m).nbPieces());
+		}
 	}
 	
 	private void choixPersonnage() {
@@ -490,17 +493,19 @@ public class Jeu {
 			System.out.println("Calcul points pour le joueur " + this.plateauDeJeu.getJoueur(i).getNom());
 			//cout construction cite = pts
 			for(int j = 0; j<this.plateauDeJeu.getJoueur(i).nbQuartiersDansCite(); j++ ) {
-				nbrPoints += this.plateauDeJeu.getJoueur(i).getCite()[j].getCout();
-				if(this.plateauDeJeu.getJoueur(i).getCite()[i].getType().equals("NOBLE")) {
-					qNoble++;
-				}else if(this.plateauDeJeu.getJoueur(i).getCite()[i].getType().equals("COMMERCANT")) {
-					qCommercant++;
-				}else if(this.plateauDeJeu.getJoueur(i).getCite()[i].getType().equals("RELIGIEUX")) {
-					qReligieux++;
-				}else if(this.plateauDeJeu.getJoueur(i).getCite()[i].getType().equals("MILITAIRE")) {
-					qMilitaire++;
-				}else if(this.plateauDeJeu.getJoueur(i).getCite()[i].getType().equals("MERVEILLE")) {
-					qMerveille++;
+				if(!this.plateauDeJeu.getJoueur(i).getCite()[j].equals(null)) {
+					nbrPoints += this.plateauDeJeu.getJoueur(i).getCite()[j].getCout();
+					if(this.plateauDeJeu.getJoueur(i).getCite()[j].getType().equals("NOBLE")) {
+						qNoble++;
+					}else if(this.plateauDeJeu.getJoueur(i).getCite()[j].getType().equals("COMMERCANT")) {
+						qCommercant++;
+					}else if(this.plateauDeJeu.getJoueur(i).getCite()[j].getType().equals("RELIGIEUX")) {
+						qReligieux++;
+					}else if(this.plateauDeJeu.getJoueur(i).getCite()[j].getType().equals("MILITAIRE")) {
+						qMilitaire++;
+					}else if(this.plateauDeJeu.getJoueur(i).getCite()[j].getType().equals("MERVEILLE")) {
+						qMerveille++;
+					}
 				}
 			}
 			//Si tout type de quartier

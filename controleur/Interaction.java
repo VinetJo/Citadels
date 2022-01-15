@@ -50,9 +50,10 @@ public class Interaction {
 		boolean retour = true;
 		String chaine="";
 		boolean continu = true;
-				
+		sc.nextLine();
+		System.out.println("test de boucle");
 		do {
-				sc.nextLine();
+
 				chaine = sc.nextLine();
 				if(chaine.toLowerCase().equals("oui")||chaine.toLowerCase().equals("o")) {
 					retour = true;
