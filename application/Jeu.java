@@ -41,6 +41,7 @@ public class Jeu {
 	
 	private void afficherLesRegles() {
 		System.out.println("Voici les règles :");
+		System.out.println();
 	}
 	
 	private void jouerPartie() {
