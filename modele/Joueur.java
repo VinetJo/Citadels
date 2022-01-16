@@ -144,6 +144,7 @@ public class Joueur {
 		Quartier quart = null;
 		int compteur =0;
 		do {
+			
 			if(this.cite[compteur].getNom() == nomQuartier) {
 				
 				// Autre methode (a voir)
@@ -159,10 +160,10 @@ public class Joueur {
 				int temp = (this.nbQuartiersDansCite() - (compteur+1));
 				for(j=0; j< temp ;j++) {
 					this.cite[compteur+j] = this.cite[compteur+1+j];
-					this.cite[compteur+1+j] = new Quartier();
+					this.cite[compteur+1+j] = null;
 				}
 				if(j==0) {
-					this.cite[compteur] = new Quartier();
+					this.cite[compteur] = null;
 				}
 											
 				return quart;

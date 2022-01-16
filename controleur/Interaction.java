@@ -73,6 +73,9 @@ public class Interaction {
 	// renvoie une chaine de caractère lue au clavier:
 	public static String lireUneChaine() {
 		String retour = "";
+		if(!sc.nextLine().equals(null)) {
+			System.out.println("Veuillez rentrer des caractères :");
+		}
 		retour = sc.nextLine();
 		return retour;
 	}

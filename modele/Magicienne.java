@@ -84,8 +84,8 @@ public class Magicienne extends Personnage{
 					for(int l =0; l<temp2; l++) {
 						
 						System.out.println("Voici les cartes de votre main :");
-						for(int k = 0; k<super.getJoueur().getMain().size();k++) {
-							System.out.println((k+1) + " " +super.getJoueur().getMain().get(k).toString());
+						for(int k = 0; k<copieTableau.size();k++) {
+							System.out.println((k+1) + " " +copieTableau.get(k).toString());
 						}
 						System.out.println("Quel carte voulez vous retirer :");
 						int temp3 = Interaction.lireUnEntier(1, (super.getJoueur().getMain().size()+1));
@@ -144,14 +144,12 @@ public class Magicienne extends Personnage{
 				do {
 					
 					int temp = ran.nextInt(super.getPlateau().getNombreJoueurs());
-					//System.out.println("nom avec qui il echange " +super.getPlateau().getJoueur(temp).getNom());
 					if(super.getPlateau().getJoueur(temp) == super.getJoueur()) {
 						continu = true;
 						System.out.println("Vous ne pouvez pas vous choisir.");
 						
 					}else {
 						ArrayList<Quartier> copieTableau2 = new ArrayList<Quartier>(super.getPlateau().getJoueur(temp).getMain());
-						//System.out.println(copieTableau.size() + " size tab bot");
 						for(int j = 0; j<copieTableau.size();j++) {
 							super.getJoueur().retirerQuartierDansMain();
 						}
@@ -194,7 +192,6 @@ public class Magicienne extends Personnage{
 					for(int l =0; l<temp2; l++) {
 												
 						int temp3 = ran.nextInt(super.getJoueur().getMain().size());
-						//System.out.println(temp3 + " ----- ");
 						super.getPlateau().getPioche().ajouter(copieTableau.get(temp3));
 
 						copieTableau.remove(temp3);

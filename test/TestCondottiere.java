@@ -107,8 +107,6 @@ public class TestCondottiere {
 		System.out.println("");
 		// utiliser le pouvoir du condottiere:		
 		condottiere.utiliserPouvoir();
-		joueur3.ajouterQuartierDansCite(pioche.piocher());
-		
 		// on réaffiche la main de chaque joueur:
 		System.out.print("Main du Roi (" + roi.getJoueur().getNom() + "): ");
 		for(int i = 0; i< roi.getJoueur().nbQuartiersDansCite(); i++)
@@ -121,7 +119,7 @@ public class TestCondottiere {
 		for(int i = 0; i< condottiere.getJoueur().nbQuartiersDansCite(); i++)
 			System.out.print(mainCondottiere[i].getNom() + ", ");
 		System.out.println("");
-		
+
 		
 		
 	}

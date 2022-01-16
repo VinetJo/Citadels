@@ -21,6 +21,7 @@ public class Pioche {
 			this.liste.remove(0);
 			return quart;
 		}else {
+			System.out.println("La pioche est vide");
 			return null;
 		}
 		

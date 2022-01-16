@@ -138,8 +138,6 @@ public class Jeu {
 						System.out.println(this.plateauDeJeu.getPersonnage(i).percevoirRessourcesSpecifiques()); 
 						System.out.println("Nombre pièce trésor = " + this.plateauDeJeu.getPersonnage(i).getJoueur().nbPieces());
 						System.out.println("Souhaitez vous utiliser votre pouvoir ?");
-						//Scanner scan = new Scanner(System.in);
-						//scan.nextLine();
 						boolean tempB = Interaction.lireOuiOuNon();
 						if(tempB) {
 							//System.out.println("test si rentre dans boucle");
@@ -153,6 +151,8 @@ public class Jeu {
 							}
 							
 						}
+						
+						
 						System.out.println("Souhaitez vous construire un nouveaux quartier ?");
 						tempB = Interaction.lireOuiOuNon();
 						if(tempB) {
@@ -165,7 +165,6 @@ public class Jeu {
 								System.out.println("Vous êtes architecte vous pouvez construire jursqu'à 3 quartiers");
 								System.out.println("Combien voulez en construire : ");
 								int temp2 = Interaction.lireUnEntier(0, 4);
-								
 								for(int k = 0; k< temp2; k++) {
 									boolean continu = false;
 									if(k>0) {
@@ -208,7 +207,33 @@ public class Jeu {
 													this.plateauDeJeu.getPersonnage(i).getJoueur().ajouterPieces(1);
 												}
 												
-											}												
+											}
+											//Si quartier construit = Ecole magie alors choix du type
+											if(quart.getNom().equals("école de magie")) {
+												System.out.println("Vous devez choisir de quel type est la cours des miracles (RELIGIEUX, MILITAIRE, NOBLE, COMMERCANT, MERVEILLE)");
+												String txt = Interaction.lireUneChaine();
+												txt = txt.toUpperCase();
+												for(int j = 0; j<this.plateauDeJeu.getPersonnage(i).getJoueur().nbQuartiersDansCite(); j++ ) {
+													if(this.plateauDeJeu.getPersonnage(i).getJoueur().getCite()[j].getNom().equals("cour des miracles")) {
+														this.plateauDeJeu.getPersonnage(i).getJoueur().getCite()[j].setType(txt);
+													}
+												}
+											//Si quartier construit = tripot
+											}else if(quart.getNom().equals("tripot")) {
+												System.out.println("Vous construisez le tripot voulez vous payer avec des cartes de votre main (une carte = 1 pièces d'or)");
+												boolean tripot = Interaction.lireOuiOuNon();
+												if(tripot) {
+													System.out.println("Combien de cartes souhaitez-vous supprimer ?");
+													int tripotTemp = Interaction.lireUnEntier(0, this.plateauDeJeu.getPersonnage(i).getJoueur().nbQuartiersDansMain()+1);
+													this.plateauDeJeu.getPersonnage(i).getJoueur().ajouterPieces(tripotTemp);
+													for(int l = 0; l<tripotTemp; l++) {
+														Quartier quart1 = new Quartier();
+														quart1 = this.plateauDeJeu.getPersonnage(i).getJoueur().retirerQuartierDansMain();
+														this.plateauDeJeu.getPioche().ajouter(quart1);
+													}
+												}
+											}
+											
 											this.plateauDeJeu.getPersonnage(i).construire(quart);
 											this.plateauDeJeu.getPersonnage(i).getJoueur().retirerPieces(quart.getCout());
 											continu = false;
@@ -252,7 +277,31 @@ public class Jeu {
 												this.plateauDeJeu.getPersonnage(i).getJoueur().ajouterPieces(1);
 											}
 											
-										}												
+										}
+										//Si quartier construit = Ecole magie alors choix du type
+										if(quart.getNom().equals("école de magie")) {
+											System.out.println("Vous devez choisir de quel type est la cours des miracles (RELIGIEUX, MILITAIRE, NOBLE, COMMERCANT, MERVEILLE)");
+											String txt = Interaction.lireUneChaine();
+											txt = txt.toUpperCase();
+											for(int j = 0; j<this.plateauDeJeu.getPersonnage(i).getJoueur().nbQuartiersDansCite(); j++ ) {
+												if(this.plateauDeJeu.getPersonnage(i).getJoueur().getCite()[j].getNom().equals("cour des miracles")) {
+													this.plateauDeJeu.getPersonnage(i).getJoueur().getCite()[j].setType(txt);
+												}
+											}
+										}else if(quart.getNom().equals("tripot")) {
+											System.out.println("Vous construisez le tripot voulez vous payer avec des cartes de votre main (une carte = 1 pièces d'or)");
+											boolean tripot = Interaction.lireOuiOuNon();
+											if(tripot) {
+												System.out.println("Combien de cartes souhaitez-vous supprimer ?");
+												int tripotTemp = Interaction.lireUnEntier(0, this.plateauDeJeu.getPersonnage(i).getJoueur().nbQuartiersDansMain()+1);
+												this.plateauDeJeu.getPersonnage(i).getJoueur().ajouterPieces(tripotTemp);
+												for(int l = 0; l<tripotTemp; l++) {
+													Quartier quart1 = new Quartier();
+													quart1 = this.plateauDeJeu.getPersonnage(i).getJoueur().retirerQuartierDansMain();
+													this.plateauDeJeu.getPioche().ajouter(quart1);
+												}
+											}
+										}
 										this.plateauDeJeu.getPersonnage(i).construire(quart);
 										this.plateauDeJeu.getPersonnage(i).getJoueur().retirerPieces(quart.getCout());
 										continu = false;
@@ -261,13 +310,30 @@ public class Jeu {
 								}while(continu);						
 							}
 						}
+						//Si laboratoire dans la cité 
+						if(this.plateauDeJeu.getJoueur(0).quartierPresentDansCite("laboratoire")) {
+							System.out.println("Vous possedez le laboratoire souhaitez-vous vous défaussez d'une carte de votre main pour recupérer 2 pièces d'or");
+							boolean labo = Interaction.lireOuiOuNon();
+							if(labo) {
+								for(int k =0; k<this.plateauDeJeu.getJoueur(0).nbQuartiersDansMain(); k++) {
+									System.out.println(k+1 + " - " +this.plateauDeJeu.getJoueur(0).getMain().get(k));
+								}
+								System.out.println("Quelle carte défaussez vous ?");
+								int temp = Interaction.lireUnEntier(1, this.plateauDeJeu.getJoueur(0).nbQuartiersDansMain()+1);
+								temp--;
+								this.plateauDeJeu.getJoueur(0).retirerQuartierDansMainPrecis(temp);
+								this.plateauDeJeu.getJoueur(0).ajouterPieces(2);
+							}
+						}
+						
 						//Affiche cité
 						System.out.println("Votre cité actuelle :");
 						for(int y = 0; y<this.plateauDeJeu.getJoueur(0).nbQuartiersDansCite();y++) {
 							System.out.println(y+1 +" - " +this.plateauDeJeu.getJoueur(0).getCite()[y].getNom());
 						}
 						
-						//Bot appelé
+						
+					//Bot appelé
 					}else {
 						percevoirRessource(i);
 						System.out.println(this.plateauDeJeu.getPersonnage(i).percevoirRessourcesSpecifiques());
@@ -327,7 +393,33 @@ public class Jeu {
 													this.plateauDeJeu.getPersonnage(i).getJoueur().ajouterPieces(1);
 												}
 												
-											}												
+											}
+											//Test merveille ecole magie
+											if(quart.getNom().equals("école de magie")) {
+											//Par défaut attribution type religieux pour le bot
+												for(int j = 0; j<this.plateauDeJeu.getPersonnage(i).getJoueur().nbQuartiersDansCite(); j++ ) {
+													if(this.plateauDeJeu.getPersonnage(i).getJoueur().getCite()[j].getNom().equals("cour des miracles")) {
+														this.plateauDeJeu.getPersonnage(i).getJoueur().getCite()[j].setType("RELIGIEUX");
+													}
+												
+												}
+											//Test merveille tripot
+											}else if(quart.getNom().equals("tripot")) {
+												System.out.println("Vous construisez le tripot voulez vous payer avec des cartes de votre main (une carte = 1 pièces d'or)");
+												boolean tripot = generateur.nextBoolean();
+												System.out.println(tripot);
+												if(tripot) {
+													System.out.println("Combien de cartes souhaitez-vous supprimer ?");
+													int tripotTemp = generateur.nextInt(this.plateauDeJeu.getPersonnage(i).getJoueur().nbQuartiersDansMain()+1);
+													System.out.println(tripotTemp);
+													this.plateauDeJeu.getPersonnage(i).getJoueur().ajouterPieces(tripotTemp);
+													for(int l = 0; l<tripotTemp; l++) {
+														Quartier quart1 = new Quartier();
+														quart1 = this.plateauDeJeu.getPersonnage(i).getJoueur().retirerQuartierDansMain();
+														this.plateauDeJeu.getPioche().ajouter(quart1);
+													}
+												}
+											}
 											this.plateauDeJeu.getPersonnage(i).construire(quart);
 											this.plateauDeJeu.getPersonnage(i).getJoueur().retirerPieces(quart.getCout());
 											continu = false;
@@ -368,13 +460,54 @@ public class Jeu {
 												this.plateauDeJeu.getPersonnage(i).getJoueur().ajouterPieces(1);
 											}
 											
-										}												
+										}		
+										//Test merveille ecole magie
+										if(quart.getNom().equals("école de magie")) {
+										//Par défaut attribution type religieux pour le bot
+											for(int j = 0; j<this.plateauDeJeu.getPersonnage(i).getJoueur().nbQuartiersDansCite(); j++ ) {
+												if(this.plateauDeJeu.getPersonnage(i).getJoueur().getCite()[j].getNom().equals("cour des miracles")) {
+													this.plateauDeJeu.getPersonnage(i).getJoueur().getCite()[j].setType("RELIGIEUX");
+												}
+											
+											}
+										}else if(quart.getNom().equals("tripot")) {
+											System.out.println("Vous construisez le tripot voulez vous payer avec des cartes de votre main (une carte = 1 pièces d'or)");
+											boolean tripot = generateur.nextBoolean();
+											System.out.println(tripot);
+											if(tripot) {
+												System.out.println("Combien de cartes souhaitez-vous supprimer ?");
+												int tripotTemp = generateur.nextInt(this.plateauDeJeu.getPersonnage(i).getJoueur().nbQuartiersDansMain()+1);
+												System.out.println(tripotTemp);
+												this.plateauDeJeu.getPersonnage(i).getJoueur().ajouterPieces(tripotTemp);
+												for(int l = 0; l<tripotTemp; l++) {
+													Quartier quart1 = new Quartier();
+													quart1 = this.plateauDeJeu.getPersonnage(i).getJoueur().retirerQuartierDansMain();
+													this.plateauDeJeu.getPioche().ajouter(quart1);
+												}
+											}
+										}
 										this.plateauDeJeu.getPersonnage(i).construire(quart);
 										this.plateauDeJeu.getPersonnage(i).getJoueur().retirerPieces(quart.getCout());
 										continu = false;
 									}
 								}while(continu);						
 							}
+						}
+						//Si laboratoire dans la cité 
+						if(this.plateauDeJeu.getPersonnage(i).getJoueur().quartierPresentDansCite("laboratoire")) {
+							System.out.println("Vous possedez le laboratoire souhaitez-vous vous défaussez d'une carte de votre main pour recupérer 2 pièces d'or");
+							boolean labo = generateur.nextBoolean();
+							System.out.println(labo);
+							if(labo) {
+								int temp = generateur.nextInt(this.plateauDeJeu.getPersonnage(i).getJoueur().nbQuartiersDansMain());
+								this.plateauDeJeu.getPersonnage(i).getJoueur().retirerQuartierDansMainPrecis(temp);
+								this.plateauDeJeu.getPersonnage(i).getJoueur().ajouterPieces(2);
+							}
+						}
+						//Affiche cité
+						System.out.println("La cité actuelle :");
+						for(int y = 0; y<this.plateauDeJeu.getPersonnage(i).getJoueur().nbQuartiersDansCite();y++) {
+							System.out.println(y+1 +" - " +this.plateauDeJeu.getPersonnage(i).getJoueur().getCite()[y].getNom());
 						}
 					}
 				}
@@ -508,20 +641,46 @@ public class Jeu {
 				
 			}else if(temp==2) {
 				ArrayList<Quartier> tempListe = new ArrayList<Quartier>();
+				boolean forge = false;
 				for(int j = 0; j<2; j++) {
 					tempListe.add(this.plateauDeJeu.getPioche().piocher());
 					System.out.println((j+1)+"- " +tempListe.get(j));
 				}
-				System.out.println("Quelle carte gardez-vous ?");
-				int temp2 = Interaction.lireUnEntier(1,3);
-				if(temp2==1) {
-					this.plateauDeJeu.getPersonnage(i).getJoueur().ajouterQuartierDansMain(tempListe.get(0));
-				}else if(temp2==2) {
-					this.plateauDeJeu.getPersonnage(i).getJoueur().ajouterQuartierDansMain(tempListe.get(1));
-				}else {
-					System.out.println("Erreur perception ressource");
+				//Si forge dans cité
+				if(this.plateauDeJeu.getPersonnage(i).getJoueur().quartierPresentDansCite("forge")) {
+					System.out.println("Vous avez la forge souhaitez vous payer 2 pièces pour voir une 3ème carte ?");
+					forge = Interaction.lireOuiOuNon();
+					if(forge) {
+						tempListe.add(this.plateauDeJeu.getPioche().piocher());
+						System.out.println("3- " +tempListe.get(2));
+						this.plateauDeJeu.getPersonnage(i).getJoueur().retirerPieces(2);
+					}
 				}
-				
+				if(this.plateauDeJeu.getPersonnage(i).getJoueur().quartierPresentDansCite("bibliothèque")) {
+					System.out.println("Vous avez la bibliothèque dans votre cité vous gardez les cartes.");
+					this.plateauDeJeu.getPersonnage(i).getJoueur().ajouterQuartierDansMain(tempListe.get(0));
+					this.plateauDeJeu.getPersonnage(i).getJoueur().ajouterQuartierDansMain(tempListe.get(1));
+					if(forge) {
+						this.plateauDeJeu.getPersonnage(i).getJoueur().ajouterQuartierDansMain(tempListe.get(2));
+					}
+				}else {
+					int temp2 = 1;
+					System.out.println("Quelle carte gardez-vous ?");
+					if(forge) {
+						temp2 = Interaction.lireUnEntier(1,4);
+					}else {
+						temp2 = Interaction.lireUnEntier(1,3);
+					}
+					if(temp2==1) {
+						this.plateauDeJeu.getPersonnage(i).getJoueur().ajouterQuartierDansMain(tempListe.get(0));
+					}else if(temp2==2) {
+						this.plateauDeJeu.getPersonnage(i).getJoueur().ajouterQuartierDansMain(tempListe.get(1));
+					}else if(temp2==3) {
+						this.plateauDeJeu.getPersonnage(i).getJoueur().ajouterQuartierDansMain(tempListe.get(2));
+					}else {
+						System.out.println("Erreur perception ressource");
+					}
+				}
 				
 			}else {
 				System.out.println("Erreur manipulation annulation percepetion ressource");
@@ -529,24 +688,53 @@ public class Jeu {
 		}else {
 			//Bot perception
 			int temp = generateur.nextInt(2);
+			
 			if(temp==0) {
 				System.out.println("Pieces +2");
 				this.plateauDeJeu.getPersonnage(i).getJoueur().ajouterPieces(2);
 			}else if(temp==1) {
 				System.out.println("Pioche cartes");
+				boolean forge = false;
 				ArrayList<Quartier> tempListe = new ArrayList<Quartier>();
 				for(int j = 0; j<2; j++) {
 					tempListe.add(this.plateauDeJeu.getPioche().piocher());
 				}
-				int temp2 = generateur.nextInt(2);
-				if(temp2==0) {
-					this.plateauDeJeu.getPersonnage(i).getJoueur().ajouterQuartierDansMain(tempListe.get(0));
-				}else if(temp2==1) {
-					this.plateauDeJeu.getPersonnage(i).getJoueur().ajouterQuartierDansMain(tempListe.get(1));
-				}else {
-					System.out.println("Erreur perception ressource");
+				//Si forge dans cité
+				if(this.plateauDeJeu.getPersonnage(i).getJoueur().quartierPresentDansCite("forge")) {
+					System.out.println("Vous avez la forge souhaitez vous payer 2 pièces pour voir une 3ème carte ?");
+					forge = generateur.nextBoolean();
+					System.out.println(forge);
+					if(forge) {
+						tempListe.add(this.plateauDeJeu.getPioche().piocher());
+						System.out.println("3- " +tempListe.get(2));
+						this.plateauDeJeu.getPersonnage(i).getJoueur().retirerPieces(2);
+					}
 				}
-				
+				//Test merveille bibliothèque 
+				if(this.plateauDeJeu.getPersonnage(i).getJoueur().quartierPresentDansCite("bibliothèque")) {
+					System.out.println("Vous avez la bibliothèque dans votre cité vous gardez les deux cartes.");
+					this.plateauDeJeu.getPersonnage(i).getJoueur().ajouterQuartierDansMain(tempListe.get(0));
+					this.plateauDeJeu.getPersonnage(i).getJoueur().ajouterQuartierDansMain(tempListe.get(1));
+					if(forge) {
+						this.plateauDeJeu.getPersonnage(i).getJoueur().ajouterQuartierDansMain(tempListe.get(2));
+					}
+				}else {
+					int temp2 = 0;
+					if(forge) {
+						temp2 = generateur.nextInt(3);
+					}else {
+						temp2 = generateur.nextInt(2);
+					}
+					if(temp2==0) {
+						this.plateauDeJeu.getPersonnage(i).getJoueur().ajouterQuartierDansMain(tempListe.get(0));
+					}else if(temp2==1) {
+						this.plateauDeJeu.getPersonnage(i).getJoueur().ajouterQuartierDansMain(tempListe.get(1));
+					}else if(temp2==3) {
+						this.plateauDeJeu.getPersonnage(i).getJoueur().ajouterQuartierDansMain(tempListe.get(2));
+					}else {
+						System.out.println("Erreur perception ressource");
+					}
+				}
 				
 			}else {
 				System.out.println("Erreur manipulation annulation percepetion ressource");
@@ -566,7 +754,7 @@ public class Jeu {
 			int qReligieux =0;
 			int qMilitaire =0;
 			int qMerveille =0;
-			System.out.println("Calcul points pour le joueur " + this.plateauDeJeu.getJoueur(i).getNom());
+			System.out.println("Calcul points pour " + this.plateauDeJeu.getJoueur(i).getNom());
 			
 			//Merveille cours des miracles
 			if(this.plateauDeJeu.getJoueur(i).quartierPresentDansCite("cour des miracles")
