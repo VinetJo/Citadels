@@ -5,34 +5,44 @@ import java.util.Random;
 import java.util.Scanner;
 
 import controleur.Interaction;
+import controleur.GraphQuestion;
 import modele.*;
 
-public class Jeu {
+public class JeuGraph {
 	
 	private PlateauDeJeu plateauDeJeu = new PlateauDeJeu(); 
 	private int numeroConfiguration;
 	private Random generateur = new Random();
 	
-	public Jeu(int numeroConfiguration) {
+	public JeuGraph(int numeroConfiguration) {
 		this.plateauDeJeu = new PlateauDeJeu(); 
 		this.numeroConfiguration = numeroConfiguration;
 		this.generateur = new Random();
 	}
 	
-	public void jouer() {
+	public void jouer() throws InterruptedException {
 		System.out.println("Bienvenue dans le jeu citadelle");
 		boolean continu=true;
+		ArrayList<String> listeChoix = new ArrayList<String>();
+		listeChoix.add("Afficher les règles");
+		listeChoix.add("Jouer une partie");
+		listeChoix.add("Quitter le jeu");
 		do {
+		/*
 		System.out.println("Que souhaitez-vous faire :");
 		System.out.println("1 - Afficher les règles");
 		System.out.println("2 - Jouer une partie");
 		System.out.println("3 - Quitter le jeu");
 		int temp = Interaction.lireUnEntier(1, 4);
-		if(temp==1) {
+		*/
+		int temp =0;
+		
+		temp = GraphQuestion.interfaceChoix("Que souhaitez-vous faire :", listeChoix);
+		if(temp==0) {
 			afficherLesRegles();
-		}else if(temp==2) {
+		}else if(temp==1) {
 			jouerPartie();
-		}else if(temp==3) {
+		}else if(temp==2) {
 			System.out.println("Au revoir");
 			continu = false;
 		}
@@ -45,7 +55,7 @@ public class Jeu {
 		System.out.println("https://www.youtube.com/watch?v=RiiTeHYMDXg");
 	}
 	
-	private void jouerPartie() {
+	private void jouerPartie() throws InterruptedException {
 		System.out.println("Vous débutez une partie");
 		initialisation();
 		do {
@@ -109,7 +119,7 @@ public class Jeu {
 		
 	}
 	
-	private void tourDeJeu() {
+	private void tourDeJeu() throws InterruptedException {
 		System.out.println("Debut du tour de jeu.");
 		choixPersonnage();
 		
@@ -522,7 +532,7 @@ public class Jeu {
 		}
 	}
 	
-	private void choixPersonnage() {
+	private void choixPersonnage() throws InterruptedException {
 		ArrayList<Personnage> listePerso = new ArrayList<Personnage>();
 		//Ajout perso dans une liste vide
 		for(int i = 0; i<this.plateauDeJeu.getNombrePersonnages(); i++) {
@@ -543,14 +553,16 @@ public class Jeu {
 		for(int k = 0; k<this.plateauDeJeu.getNombreJoueurs();k++) {
 			//Si le joueur principal à la couronne
 			if(this.plateauDeJeu.getJoueur(k).getPossedeCouronne()==true && this.plateauDeJeu.getJoueur(k).equals(this.plateauDeJeu.getJoueur(0))) {
+				ArrayList<String> listeChoixPerso = new ArrayList<String>();
 				System.out.println("Vous avez la couronne ! ");
 				for(int l = 0; l<listePerso.size(); l++) {
 					System.out.println((l+1) +": Rang " + listePerso.get(l).getRang() + " - " + listePerso.get(l).getNom());
+					listeChoixPerso.add("Rang " + listePerso.get(l).getRang() + " - " + listePerso.get(l).getNom());
 				}
 				System.out.println("Quel personnage choisissez-vous ?");
 				//do {
-					int temp3 = Interaction.lireUnEntier(1, listePerso.size()+1);
-					temp3--;
+					
+					int temp3 = GraphQuestion.interfaceChoix("Quel personnage choisissez-vous ?", listeChoixPerso);
 					
 					/* idée non aboutie
 					if(!listePerso.get(temp3).equals(this.plateauDeJeu.getPersonnage(temp3))) {
@@ -592,13 +604,13 @@ public class Jeu {
 				
 				for(int n = 0; n<this.plateauDeJeu.getNombreJoueurs(); n++) {
 					if(n==0) {
+						ArrayList<String> listeChoixPerso = new ArrayList<String>();
 						System.out.println("C'est à votre tour");
 						for(int l = 0; l<listePerso.size(); l++) {
 							System.out.println(l+1 + " : Rang "+listePerso.get(l).getRang() + " - " + listePerso.get(l).getNom());
+							listeChoixPerso.add("Rang " + listePerso.get(l).getRang() + " - " + listePerso.get(l).getNom());
 						}
-						System.out.println("Quel personnage choisissez-vous ?");
-						int temp3 = Interaction.lireUnEntier(1, listePerso.size()+1);
-						temp3--;
+						int temp3 = GraphQuestion.interfaceChoix("Quel personnage choisissez-vous ?", listeChoixPerso);
 							
 						for(int m = 0; m<this.plateauDeJeu.getNombrePersonnages();m++) {
 							if(listePerso.get(temp3).getNom().equals(this.plateauDeJeu.getPersonnage(m).getNom())) {
@@ -636,6 +648,7 @@ public class Jeu {
 		if(this.plateauDeJeu.getPersonnage(i).getJoueur().equals(this.plateauDeJeu.getJoueur(0))) {
 			//Utilisateur perception
 			System.out.println("Choisissez entre deux pièces d'or (1) ou deux cartes de la pioche et n'en garder qu'une seule (2)");
+			ArrayList<String> ressourceChoix = new ArrayList<String>();
 			int temp = Interaction.lireUnEntier(1,3);
 			if(temp==1) {
 				this.plateauDeJeu.getPersonnage(i).getJoueur().ajouterPieces(2);
