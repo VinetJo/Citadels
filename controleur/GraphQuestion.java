@@ -24,7 +24,7 @@ public class GraphQuestion {
 	    JFrame frame = new JFrame("Question Oui ou Non");
 	    
 	    JLabel txt = new JLabel(question);
-	    txt.setBounds(50,50, 180,20);
+	    txt.setBounds(50,50, 300,20);
 	    
 	    //Créer le bouton
 	    JButton btnO = new JButton("Oui");

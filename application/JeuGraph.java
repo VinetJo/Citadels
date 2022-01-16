@@ -149,9 +149,8 @@ public class JeuGraph {
 						System.out.println(this.plateauDeJeu.getPersonnage(i).percevoirRessourcesSpecifiques()); 
 						System.out.println("Nombre pièce trésor = " + this.plateauDeJeu.getPersonnage(i).getJoueur().nbPieces());
 						System.out.println("Souhaitez vous utiliser votre pouvoir ?");
-						boolean tempB = Interaction.lireOuiOuNon();
+						boolean tempB = GraphQuestion.interfaceOuiOuNon("Souhaitez vous utiliser votre pouvoir ?");
 						if(tempB) {
-							//System.out.println("test si rentre dans boucle");
 							this.plateauDeJeu.getPersonnage(i).utiliserPouvoir();
 						}else {
 							if(this.plateauDeJeu.getPersonnage(i).getNom().equals("Roi")) {
@@ -165,10 +164,13 @@ public class JeuGraph {
 						
 						
 						System.out.println("Souhaitez vous construire un nouveaux quartier ?");
-						tempB = Interaction.lireOuiOuNon();
+						tempB = GraphQuestion.interfaceOuiOuNon("Souhaitez vous construire un nouveaux quartier ?");
 						if(tempB) {
+							ArrayList<String> constructionChoix = new ArrayList<String>();
+							constructionChoix.add("Annulation construction");
 							for(int j = 0; j<this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().size(); j++) {
 								System.out.println((j+1)+" - "+this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().get(j) + " "); 
+								constructionChoix.add(this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().get(j).toString());
 							}							
 							
 							//Si architect :
@@ -187,7 +189,7 @@ public class JeuGraph {
 									System.out.println("Quel cartes construisez vous ? (pour annuler choisir 0)");
 									int temp = 0;
 									do {
-										temp = Interaction.lireUnEntier(0, (this.plateauDeJeu.getPersonnage(i).getJoueur().nbQuartiersDansMain()+1));
+										temp = GraphQuestion.interfaceChoix("Quel cartes construisez vous ?", constructionChoix);
 										temp--;
 										if(temp==-1) {
 											System.out.println("Annulation construction");
@@ -256,7 +258,7 @@ public class JeuGraph {
 								System.out.println("Quel cartes construisez vous ? (pour annuler choisir 0)");
 								int temp = 0;
 								do {
-									temp = Interaction.lireUnEntier(0, this.plateauDeJeu.getPersonnage(i).getJoueur().nbQuartiersDansMain()+1);
+									temp = GraphQuestion.interfaceChoix("Quel cartes construisez vous ?", constructionChoix);
 									temp--;
 									if(temp==-1) {
 										System.out.println("Annulation construction");
@@ -644,21 +646,25 @@ public class JeuGraph {
 		
 	}
 	
-	private void percevoirRessource(int i) {
+	private void percevoirRessource(int i) throws InterruptedException {
 		if(this.plateauDeJeu.getPersonnage(i).getJoueur().equals(this.plateauDeJeu.getJoueur(0))) {
 			//Utilisateur perception
 			System.out.println("Choisissez entre deux pièces d'or (1) ou deux cartes de la pioche et n'en garder qu'une seule (2)");
 			ArrayList<String> ressourceChoix = new ArrayList<String>();
-			int temp = Interaction.lireUnEntier(1,3);
-			if(temp==1) {
+			ressourceChoix.add("Pieces");
+			ressourceChoix.add("Cartes");
+			int temp = GraphQuestion.interfaceChoix("Choisissez entre deux pièces d'or ou deux cartes de la pioche et n'en garder qu'une seule",ressourceChoix);
+			if(temp==0) {
 				this.plateauDeJeu.getPersonnage(i).getJoueur().ajouterPieces(2);
 				
-			}else if(temp==2) {
+			}else if(temp==1) {
 				ArrayList<Quartier> tempListe = new ArrayList<Quartier>();
+				ArrayList<String> carteChoix = new ArrayList<String>();
 				boolean forge = false;
 				for(int j = 0; j<2; j++) {
 					tempListe.add(this.plateauDeJeu.getPioche().piocher());
 					System.out.println((j+1)+"- " +tempListe.get(j));
+					carteChoix.add(tempListe.get(j).getNom() + " couts :" + tempListe.get(j).getCout());
 				}
 				//Si forge dans cité
 				if(this.plateauDeJeu.getPersonnage(i).getJoueur().quartierPresentDansCite("forge")) {
@@ -670,6 +676,7 @@ public class JeuGraph {
 						this.plateauDeJeu.getPersonnage(i).getJoueur().retirerPieces(2);
 					}
 				}
+				//Si bibliothèque
 				if(this.plateauDeJeu.getPersonnage(i).getJoueur().quartierPresentDansCite("bibliothèque")) {
 					System.out.println("Vous avez la bibliothèque dans votre cité vous gardez les cartes.");
 					this.plateauDeJeu.getPersonnage(i).getJoueur().ajouterQuartierDansMain(tempListe.get(0));
@@ -683,13 +690,13 @@ public class JeuGraph {
 					if(forge) {
 						temp2 = Interaction.lireUnEntier(1,4);
 					}else {
-						temp2 = Interaction.lireUnEntier(1,3);
+						temp2 = GraphQuestion.interfaceChoix("Quelle carte gardez-vous ?", carteChoix);
 					}
-					if(temp2==1) {
+					if(temp2==0) {
 						this.plateauDeJeu.getPersonnage(i).getJoueur().ajouterQuartierDansMain(tempListe.get(0));
-					}else if(temp2==2) {
+					}else if(temp2==1) {
 						this.plateauDeJeu.getPersonnage(i).getJoueur().ajouterQuartierDansMain(tempListe.get(1));
-					}else if(temp2==3) {
+					}else if(temp2==2) {
 						this.plateauDeJeu.getPersonnage(i).getJoueur().ajouterQuartierDansMain(tempListe.get(2));
 					}else {
 						System.out.println("Erreur perception ressource");
@@ -697,7 +704,7 @@ public class JeuGraph {
 				}
 				
 			}else {
-				System.out.println("Erreur manipulation annulation percepetion ressource");
+				System.out.println("Erreur manipulation annulation percepetion ressources");
 			}
 		}else {
 			//Bot perception
