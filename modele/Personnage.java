@@ -4,6 +4,7 @@
 package modele;
 
 import java.util.Random;
+import java.util.ArrayList;
 
 public abstract class Personnage {
 	
@@ -147,6 +148,10 @@ public abstract class Personnage {
 	}
 	
 	public void utiliserPouvoirAvatar() {
+		
+	}
+	
+	public void utiliserPouvoirGraph() throws InterruptedException{
 		
 	}
 	

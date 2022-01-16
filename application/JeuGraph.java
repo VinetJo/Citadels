@@ -123,7 +123,7 @@ public class JeuGraph {
 		System.out.println("Debut du tour de jeu.");
 		choixPersonnage();
 		
-		//TEST
+		//TEST POUR COMPREHENSION PARTIE
 		for(int b = 0; b<this.plateauDeJeu.getNombrePersonnages(); b++) {
 			if(this.plateauDeJeu.getPersonnage(b).getJoueur()!=null) {
 				System.out.println("perso " + this.plateauDeJeu.getPersonnage(b).getNom() +" attribué a " + this.plateauDeJeu.getPersonnage(b).getJoueur().getNom());
@@ -151,7 +151,7 @@ public class JeuGraph {
 						System.out.println("Souhaitez vous utiliser votre pouvoir ?");
 						boolean tempB = GraphQuestion.interfaceOuiOuNon("Souhaitez vous utiliser votre pouvoir ?");
 						if(tempB) {
-							this.plateauDeJeu.getPersonnage(i).utiliserPouvoir();
+							this.plateauDeJeu.getPersonnage(i).utiliserPouvoirGraph();
 						}else {
 							if(this.plateauDeJeu.getPersonnage(i).getNom().equals("Roi")) {
 								this.plateauDeJeu.getPersonnage(i).utiliserPouvoir();
@@ -176,8 +176,11 @@ public class JeuGraph {
 							//Si architect :
 							if(this.plateauDeJeu.getPersonnage(i).getNom().equals("Architecte")) {
 								System.out.println("Vous êtes architecte vous pouvez construire jursqu'à 3 quartiers");
-								System.out.println("Combien voulez en construire : ");
-								int temp2 = Interaction.lireUnEntier(0, 4);
+								ArrayList<String> listeArchi = new ArrayList<String>();
+								for(int p = 0; p<4; p++) {
+									listeArchi.add(p + "");
+								}
+								int temp2 = GraphQuestion.interfaceChoix("Combien voulez en construire : ", listeArchi);
 								for(int k = 0; k< temp2; k++) {
 									boolean continu = false;
 									if(k>0) {

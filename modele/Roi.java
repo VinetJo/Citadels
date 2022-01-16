@@ -24,6 +24,14 @@ public class Roi extends Personnage{
 		}
 	}
 	
+	public void utiliserPouvoirGraph() {
+		boolean possedeC = true;
+		if(super.getJoueur()!=null) {
+			super.getJoueur().setPossedeCouronne(possedeC);
+			System.out.println("Je prend la couronne");
+		}
+	}
+	
 	public String percevoirRessourcesSpecifiques() {
 		int compteur =0;
 		if(super.getJoueur()!=null) {

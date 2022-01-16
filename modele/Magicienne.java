@@ -231,14 +231,16 @@ public class Magicienne extends Personnage{
 			boolean continu = false;
 			boolean accept = GraphQuestion.interfaceOuiOuNon("Voulez vous échanger vos cartes avec un autre joueur ?");
 			if(accept) {
+				ArrayList<String> joueurChoix = new ArrayList<String>();
 				//échange avec un joueur
 				for(int i = 0; i<super.getPlateau().getNombreJoueurs();i++) {
 					System.out.println(i + " - " + super.getPlateau().getJoueur(i).getNom() + " / nb cartes : " + super.getPlateau().getJoueur(i).getMain().size());
+					joueurChoix.add(super.getPlateau().getJoueur(i).getNom() + " / nb cartes : " + super.getPlateau().getJoueur(i).getMain().size());
 				}
 				do {
 					
 					System.out.println("Quel joueur choisir (chiffre attendu) :");
-					int temp = Interaction.lireUnEntier(0, super.getPlateau().getNombreJoueurs());
+					int temp = GraphQuestion.interfaceChoix("Quel joueur choisir :", joueurChoix);
 					
 					if(super.getPlateau().getJoueur(temp) == super.getJoueur()) {
 						continu = true;
@@ -267,9 +269,12 @@ public class Magicienne extends Personnage{
 				
 			}else if(!accept) {
 				//échange avec la pioche
-				
-				System.out.println("Combien de cartes voulez vous prendre dans la pioche : ");
-				int temp2 = Interaction.lireUnEntier(0, (super.getJoueur().getMain().size()+1));
+				ArrayList<String> nbCartesPioche = new ArrayList<String>();
+				System.out.println();
+				for(int y = 0; y<super.getJoueur().getMain().size()+1; y++) {
+					nbCartesPioche.add(y + "");
+				}
+				int temp2 =GraphQuestion.interfaceChoix("Combien de cartes voulez vous prendre dans la pioche : ", nbCartesPioche);
 				
 				if(temp2==0) {
 					System.out.println("Aucune action effectué fin du pouvoir.");
@@ -286,12 +291,13 @@ public class Magicienne extends Personnage{
 					for(int l =0; l<temp2; l++) {
 						
 						System.out.println("Voici les cartes de votre main :");
+						ArrayList<String> carteMain = new ArrayList<String>();
 						for(int k = 0; k<copieTableau.size();k++) {
 							System.out.println((k+1) + " " +copieTableau.get(k).toString());
+							carteMain.add(copieTableau.get(k).toString());
 						}
 						System.out.println("Quel carte voulez vous retirer :");
-						int temp3 = Interaction.lireUnEntier(1, (super.getJoueur().getMain().size()+1));
-						temp3--;
+						int temp3 = GraphQuestion.interfaceChoix("Quel carte voulez vous retirer :", carteMain);
 						super.getPlateau().getPioche().ajouter(copieTableau.get(temp3));
 
 						copieTableau.remove(temp3);

@@ -1,7 +1,9 @@
 package modele;
 
+import java.util.ArrayList;
 import java.util.Random;
 
+import controleur.GraphQuestion;
 import controleur.Interaction;
 
 public class Condottiere extends Personnage{
@@ -33,12 +35,13 @@ public class Condottiere extends Personnage{
 				do {
 					boucle = false;
 					System.out.println("Quel quartier voulez vous détruire ?");
-					int temp3 = Interaction.lireUnEntier(0, super.getPlateau().getJoueur(temp2).getCite().length+1);
+					int temp3 = Interaction.lireUnEntier(0, super.getPlateau().getJoueur(temp2).nbQuartiersDansCite()+1);
 					if(temp3==0) {
 						System.out.println("Pouvoir annulé");
 						break;
 					}
 					temp3--;
+					System.out.println(temp3);
 					if(super.getJoueur().nbPieces()<(super.getPlateau().getJoueur(temp2).getCite()[temp3].getCout()-1)) {
 						System.out.println("Votre trésor n'est pas suffisant");
 						boucle = true;
@@ -100,9 +103,13 @@ public class Condottiere extends Personnage{
 			
 		
 	}
-	public void utiliserPouvoirGraph() {
+	public void utiliserPouvoirGraph() throws InterruptedException {
+		ArrayList<String> listeJoueur = new ArrayList<String>();
+		listeJoueur.add("Annulation Pouvoir");
 		for(int i =0 ; i< super.getPlateau().getNombreJoueurs() ; i++) {
 			System.out.println((i+1) + " - " + super.getPlateau().getJoueur(i).getNom()+ ": ");
+			listeJoueur.add(super.getPlateau().getJoueur(i).getNom());
+			
 			for(int j = 0; j<super.getPlateau().getJoueur(i).nbQuartiersDansCite(); j++) {
 				System.out.println("-> "+(j+1) + "-" + super.getPlateau().getJoueur(i).getCite()[j].getNom()
 						+ "(coût " +(super.getPlateau().getJoueur(i).getCite()[j].getCout()-1) + ")," );
@@ -110,8 +117,7 @@ public class Condottiere extends Personnage{
 			}
 		}
 		System.out.println("Pour information vous avez : " + super.getJoueur().nbPieces() + " pieces dans votre trésor");
-		System.out.println("Quel joueurs choisissez-vous ? (0 pour ne rien faire)");
-		int temp2  = Interaction.lireUnEntier(0, (super.getPlateau().getNombreJoueurs()+1));
+		int temp2  = GraphQuestion.interfaceChoix("Quel joueurs choisissez-vous ?", listeJoueur);
 		if(temp2==0) {
 			System.out.println("Pouvoir annulé");
 		}else if(super.getPlateau().getJoueur(temp2-1).getPersonnage().getNom().equals("Eveque")){
@@ -121,8 +127,12 @@ public class Condottiere extends Personnage{
 			boolean boucle;
 			do {
 				boucle = false;
-				System.out.println("Quel quartier voulez vous détruire ?");
-				int temp3 = Interaction.lireUnEntier(0, super.getPlateau().getJoueur(temp2).getCite().length+1);
+				ArrayList<String> listeQuartier = new ArrayList<String>();
+				listeQuartier.add("Annulation Pouvoir");
+				for(int m = 0; m<super.getPlateau().getJoueur(temp2).nbQuartiersDansCite(); m++) {
+					listeQuartier.add(super.getPlateau().getJoueur(temp2).getCite()[m].getNom());
+				}
+				int temp3 = GraphQuestion.interfaceChoix("Quel quartier voulez vous détruire ?", listeQuartier);
 				if(temp3==0) {
 					System.out.println("Pouvoir annulé");
 					break;
